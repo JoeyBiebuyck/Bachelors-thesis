@@ -8,10 +8,10 @@ def n_arms():
 def poisson_exp_bandit():
     n = n_arms()
     means_ = poisson_exp_means()
-    def reward_fn(lambda_):
+    def reward_fn(lambda_): # returns a poisson distribution according to parameter lambda_
         return lambda: np.random.poisson(lambda_)
-    arms = list(map(reward_fn, means_))
-    return Bandit(arms)
+    arms = list(map(reward_fn, means_)) # uses each mean as the lambda of a reward distribution, essentially creating a reward distribution for each mean and putting it in a list
+    return Bandit(arms) # makes a bandit that for each arm has a reward distribution, and if an arm is pulled it will just sample from that reward distribution
 
 def poisson_exp_means():
     return [1.21374862e+00, 4.00605648e+00, 4.72696474e-01, 8.23307902e-01,
