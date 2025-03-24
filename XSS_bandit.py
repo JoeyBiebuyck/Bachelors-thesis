@@ -4,6 +4,13 @@
 
 # print(r.text)
 
-import sys
-sys.path.append(r"D:\Documents\Programming projects\CLONED PROJECTS\bfts")
-from bandit import Bandit
+from bfts.bandit import Bandit
+
+def n_arms():
+    return len(XSS_transformations())
+
+def XSS_transformations():
+    return [] # fill this list with functions that take one argument (a payload) and transform it in a certain way
+
+def XSS_bandit():
+    
