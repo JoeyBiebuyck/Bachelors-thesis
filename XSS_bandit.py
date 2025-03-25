@@ -28,7 +28,7 @@ def XSS_bandit():
     
 
 def send_and_get_result(payload_):
-    engine_to_ip_dict = {"chromium": "127.0.0.1:8000", "safari": "127.0.0.2:8000", "firefox": "127.0.0.3:8000"}
+    engine_to_ip_dict = {"chromium": "127.0.0.1:8000", "safari": "127.0.0.1:8001", "firefox": "127.0.0.1:8002"}
 
     # 1st choose which server to send it to (which browser engine)
     engines = ["chromium", "safari", "firefox"]
