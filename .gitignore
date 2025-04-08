@@ -200,3 +200,8 @@ docker-compose.override.yml
 venv/
 .virtualenv/
 virtualenv/
+
+# Cache of the websites
+chromium_website/homepage/__pycache__/views.cpython-313.pyc
+firefox_website/homepage/__pycache__/views.cpython-313.pyc
+safari_website/homepage/__pycache__/views.cpython-313.pyc
