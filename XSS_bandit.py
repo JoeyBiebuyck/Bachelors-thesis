@@ -1,9 +1,3 @@
-# import requests
-
-# r = requests.get('http://127.0.0.1:8000/search/?q=test') # test should be the payload
-
-# print(r.text)
-
 import requests
 import random
 from bfts.bandit import Bandit
@@ -38,8 +32,14 @@ def send_and_get_result(payload_):
     full_ip = ip + "/search/?q=" + payload_
     r = requests.get(full_ip) # TODO: this does not give the right info back yet, update that in each of the servers
 
-    # 3rd receive a response of that server (this will be either a 1 (success) or 0 (fail))
+    # 3rd receive a response of that server (this will be either 200 (success) or 404 (fail))
+    status = r.status_code
+
     # 4th return this response
+    if status == 200:
+        return 1
+    else:
+        return 0
 
 r = requests.get('http://127.0.0.1:8000/search/?q=test') # test should be the payload
 
