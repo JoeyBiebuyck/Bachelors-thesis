@@ -41,9 +41,9 @@ def send_and_get_result(payload_):
     else:
         return 0
 
-r = requests.get('http://127.0.0.1:8000/search/?q=test') # test should be the payload
+# r = requests.get('http://127.0.0.1:8000/search/?q=test') # test should be the payload
 
-print(r.status_code)
+# print(r.status_code)
 
 # Definition of transformations:
 
