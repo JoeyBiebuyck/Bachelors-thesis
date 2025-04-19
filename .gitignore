@@ -205,3 +205,6 @@ virtualenv/
 chromium_website/homepage/__pycache__/views.cpython-313.pyc
 firefox_website/homepage/__pycache__/views.cpython-313.pyc
 safari_website/homepage/__pycache__/views.cpython-313.pyc
+chromium_website/homepage/__pycache__/views.cpython-313.pyc
+firefox_website/homepage/__pycache__/views.cpython-313.pyc
+safari_website/homepage/__pycache__/views.cpython-313.pyc
