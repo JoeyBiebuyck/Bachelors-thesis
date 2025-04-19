@@ -9,12 +9,15 @@ def homepage(request):
 
 def search_view(request):
     query = request.GET.get('q', '')  # Get the search term from the URL
-    # TODO: here we can add code about what to do with a specific query, eg. sampling from a binomial distribution and returning success or failure
 
-    # currently returning a random succes/failure
-    if random.randint(0, 1) == 0:
-        return HttpResponse(status=200)
+    # What to do with a specific query, eg. sampling from a binomial distribution and returning success or failure
+    # could also do the below filtering by putting a < in the if clause
+    disarmedInputs = list(range(1,15)) # the weakest 70% (14) of the XSS payloads get sanitized by this website's filter (there are 20 transformations possible)
+
+    # returning succes/failure
+    if query in disarmedInputs:
+        return HttpResponse(status=404) # query unsuccessfully attempted to evade XSS-filter
     else:
-        return HttpResponse(status=404)
+        return HttpResponse(status=200) # query successfully evaded XSS-filter
 
     # return render(request, 'search.html', {'query': query}) # uncomment this if you are manually testing whether an evasion technique works
