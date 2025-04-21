@@ -13,7 +13,7 @@ def search_view(request):
 
     # What to do with a specific query, eg. sampling from a binomial distribution and returning success or failure
     # could also do the below filtering by putting a < in the if clause
-    disarmedInputs = list(range(1,6)) # the weakest 25% (5) of the XSS payloads get sanitized by this website's filter (there are 20 transformations possible)
+    disarmedInputs = [str(x) for x in list(range(1,6))] # the weakest 25% (5) of the XSS payloads get sanitized by this website's filter (there are 20 transformations possible)
 
     # returning succes/failure
     if query in disarmedInputs:
