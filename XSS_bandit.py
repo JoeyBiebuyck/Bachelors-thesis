@@ -2,7 +2,7 @@ import requests
 import random
 from bfts.bandit import Bandit
 
-random.seed(1)
+#random.seed(1)
 
 def n_arms():
     return len(XSS_transformations())
@@ -13,7 +13,9 @@ def XSS_transformations():
 def XSS_bandit():
     base_payload = "alert('Hi!')"
     transformations_ = XSS_transformations()
+    #print(f"the transformations are {transformations_}")
     transformed_payloads = list(transformation(base_payload) for transformation in transformations_)
+    random.Random(1).shuffle(transformed_payloads)
     def reward_fn(payload_):
         return lambda: send_and_get_result(payload_)
     arms = list(map(reward_fn, transformed_payloads))
@@ -27,6 +29,8 @@ def send_and_get_result(payload_):
     engine = random.choice(engines)
     ip = engine_to_ip_dict[engine]
 
+    #print(f"sending packet to {engine}")
+
     # 2nd send the payload to that server
     full_ip = ip + "/search/?q=" + str(payload_)
     r = requests.get(full_ip)
@@ -36,10 +40,11 @@ def send_and_get_result(payload_):
 
     # 4th return this response
     if status == 200:
+        #print(status)
         return 1
     elif status == 404:
+        #print(status)
         return 0
-
 
 # Simulations of XSS transformations:
 
@@ -62,6 +67,19 @@ def create_XSS_transformations(amount: int):
         all_techniques.append(technique)
 
     return all_techniques
+
+if __name__ == "__main__":
+    transformations = create_XSS_transformations(20)
+    outputs = [transform("test") for transform in transformations]
+    print(outputs)
+
+    for x in range(10):
+        full_ip = "http://127.0.0.1:8001" + "/search/?q=" + str(random.choice(outputs))
+        r = requests.get(full_ip)
+
+        status = r.status_code
+
+        print(status)
 
 
 # manually defined transformations: 
