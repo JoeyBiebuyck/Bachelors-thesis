@@ -10,31 +10,31 @@
 # Project-specific directories for all three projects
 chrome_website/__pycache__/
 medium_security_website/__pycache__/
-firefox_website/__pycache__/
+strict_security_website/__pycache__/
 
 chrome_website/local_settings.py
 medium_security_website/local_settings.py
-firefox_website/local_settings.py
+strict_security_website/local_settings.py
 
 chrome_website/db.sqlite3
 medium_security_website/db.sqlite3
-firefox_website/db.sqlite3
+strict_security_website/db.sqlite3
 
 chrome_website/db.sqlite3-journal
 medium_security_website/db.sqlite3-journal
-firefox_website/db.sqlite3-journal
+strict_security_website/db.sqlite3-journal
 
 chrome_website/media/
 medium_security_website/media/
-firefox_website/media/
+strict_security_website/media/
 
 chrome_website/static/
 medium_security_website/static/
-firefox_website/static/
+strict_security_website/static/
 
 chrome_website/staticfiles/
 medium_security_website/staticfiles/
-firefox_website/staticfiles/
+strict_security_website/staticfiles/
 
 # Or use pattern-based matching for project directories
 **/__pycache__/
@@ -203,8 +203,8 @@ virtualenv/
 
 # Cache of the websites
 weak_security_website/homepage/__pycache__/views.cpython-313.pyc
-firefox_website/homepage/__pycache__/views.cpython-313.pyc
+strict_security_website/homepage/__pycache__/views.cpython-313.pyc
 medium_security_website/homepage/__pycache__/views.cpython-313.pyc
 weak_security_website/homepage/__pycache__/views.cpython-313.pyc
-firefox_website/homepage/__pycache__/views.cpython-313.pyc
+strict_security_website/homepage/__pycache__/views.cpython-313.pyc
 medium_security_website/homepage/__pycache__/views.cpython-313.pyc
