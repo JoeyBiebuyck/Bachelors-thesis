@@ -22,10 +22,10 @@ def XSS_bandit(n_arms: int):
     return Bandit(arms)
     
 def send_and_get_result(payload_):
-    engine_to_ip_dict = {weak_security_website": "http://127.0.0.1:8000", "safari": "http://127.0.0.1:8001", "firefox": "http://127.0.0.1:8002"}
+    engine_to_ip_dict = {weak_security_website": "http://127.0.0.1:8000", "medium_security_website": "http://127.0.0.1:8001", "firefox": "http://127.0.0.1:8002"}
 
     # 1st choose which server to send it to (which browser engine)
-    engines = [weak_security_website", "safari", "firefox"]
+    engines = [weak_security_website", "medium_security_website", "firefox"]
     engine = random.choice(engines)
     ip = engine_to_ip_dict[engine]
 
