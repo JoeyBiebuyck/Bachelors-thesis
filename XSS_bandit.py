@@ -7,12 +7,12 @@ from bfts.bandit import Bandit
 def n_arms():
     return len(XSS_transformations())
 
-def XSS_transformations():
-    return create_XSS_transformations(20) # fill this list with functions that take one argument (a payload) and transform it in a certain way
+def XSS_transformations(n_arms):
+    return create_XSS_transformations(n_arms) # fill this list with functions that take one argument (a payload) and transform it in a certain way
 
-def XSS_bandit():
+def XSS_bandit(n_arms: int):
     base_payload = "alert('Hi!')"
-    transformations_ = XSS_transformations()
+    transformations_ = XSS_transformations(n_arms)
     #print(f"the transformations are {transformations_}")
     transformed_payloads = list(transformation(base_payload) for transformation in transformations_)
     random.Random(1).shuffle(transformed_payloads)
