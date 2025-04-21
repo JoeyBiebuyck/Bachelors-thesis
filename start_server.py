@@ -10,7 +10,7 @@ def send_command(command):
 
 def start_server():
     # use separate threads so each server is running concurrently
-    server1 = threading.Thread(target=send_command, daemon=True, args=("python chromium_website/manage.py runserver 127.0.0.1:8000",))
+    server1 = threading.Thread(target=send_command, daemon=True, args=("python weak_security_website/manage.py runserver 127.0.0.1:8000",))
     server2 = threading.Thread(target=send_command, daemon=True, args=("python safari_website/manage.py runserver 127.0.0.1:8001",))
     server3 = threading.Thread(target=send_command, daemon=True, args=("python firefox_website/manage.py runserver 127.0.0.1:8002",))
     
