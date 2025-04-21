@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.template import loader
 import random
-# from run_atlucb_xss import n_arms
+#from run_atlucb_xss import n_arms
 
 def homepage(request):
     template = loader.get_template('home.html')
