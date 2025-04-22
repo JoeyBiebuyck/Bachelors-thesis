@@ -15,7 +15,8 @@ def XSS_bandit(n_arms: int):
     transformations_ = XSS_transformations(n_arms)
     #print(f"the transformations are {transformations_}")
     transformed_payloads = list(transformation(base_payload) for transformation in transformations_)
-    random.Random(1).shuffle(transformed_payloads)
+    print(transformed_payloads)
+    random.Random(1).shuffle(transformed_payloads) # The seed of this shuffle decides what technique will be associated with each arm
     def reward_fn(payload_):
         return lambda: send_and_get_result(payload_)
     arms = list(map(reward_fn, transformed_payloads))
