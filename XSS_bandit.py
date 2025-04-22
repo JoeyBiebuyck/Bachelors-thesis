@@ -39,12 +39,14 @@ def send_and_get_result(payload_):
     # 3rd receive a HTTP response of that server (this will be either 200 (success) or 404 (fail))
     status = r.status_code
 
+    print(f"stuur {payload_} naar {engine}, dit is de status {status}")
+
     # 4th return this response
     if status == 200:
-        #print(status)
+        # print("giving 1")
         return 1
     elif status == 404:
-        #print(status)
+        # print("not giving them anything")
         return 0
 
 # Simulations of XSS transformations:
@@ -70,17 +72,34 @@ def create_XSS_transformations(amount: int):
     return all_techniques
 
 if __name__ == "__main__":
-    transformations = create_XSS_transformations(20)
-    outputs = [transform("test") for transform in transformations]
-    print(outputs)
+    # transformations = create_XSS_transformations(20)
+    # outputs = [transform("test") for transform in transformations]
+    # print(outputs)
 
-    for x in range(10):
-        full_ip = "http://127.0.0.1:8001" + "/search/?q=" + str(random.choice(outputs))
-        r = requests.get(full_ip)
+    # for x in range(10):
+    #     full_ip = "http://127.0.0.1:8001" + "/search/?q=" + str(random.choice(outputs))
+    #     r = requests.get(full_ip)
 
-        status = r.status_code
+    #     status = r.status_code
 
-        print(status)
+    #     print(status)
+
+    # base_payload = "alert('Hi!')"
+    # transformations_ = XSS_transformations(20)
+    # print(f"the transformations are {transformations_}")
+    # transformed_payloads = list(transformation(base_payload) for transformation in transformations_)
+    # print(f"these are the transformed payloads {transformed_payloads}")
+    # #random.Random(1).shuffle(transformed_payloads) # The seed of this shuffle decides what technique will be associated with each arm
+    # def reward_fn(payload_):
+    #     return lambda: send_and_get_result(payload_)
+    # arms = list(map(reward_fn, transformed_payloads))
+
+    # for x in range(4):
+    #     arm = random.choice(arms)
+    #     reward = arm()
+    #     print(f"This is the reward {reward}")
+    pass
+
 
 
 # manually defined transformations: 
