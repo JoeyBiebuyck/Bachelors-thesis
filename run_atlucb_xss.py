@@ -34,7 +34,7 @@ bandit = XSS_bandit(n_arms)
 # print("Servers have been started")
 
 print_header(args.m)
-sigma=0.9
+sigma=0.5
 alpha=0.99
 epsilon=0
 algo = AT_LUCB(bandit, args.m, sigma, alpha, epsilon)
