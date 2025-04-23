@@ -1,5 +1,5 @@
-from bandit import Bandit
-from environments.gaussian_jun import linear_means, polynomial_means
+from bfts.bandit import Bandit
+from bfts.environments.gaussian_jun import linear_means, polynomial_means
 
 import numpy as np
 

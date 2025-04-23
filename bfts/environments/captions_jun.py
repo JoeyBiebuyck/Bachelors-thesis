@@ -1,8 +1,8 @@
 import csv
-from bandit import Bandit
+from bfts.bandit import Bandit
 import numpy as np
 import os
-import environments
+import bfts.environments
 
 #read the caption data and group the rewards per caption
 def read_data(data, nr_captions, nr_categories):

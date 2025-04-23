@@ -1,4 +1,4 @@
-from bandit import Bandit
+from bfts.bandit import Bandit
 
 import numpy as np
 
