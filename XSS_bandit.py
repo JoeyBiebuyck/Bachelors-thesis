@@ -4,8 +4,9 @@ from bfts.bandit import Bandit
 
 #random.seed(1)
 
-def n_arms():
-    return len(XSS_transformations())
+# does not work with dynamic arms
+# def n_arms():
+#     return len(XSS_transformations())
 
 def XSS_transformations(n_arms):
     return create_XSS_transformations(n_arms) # fill this list with functions that take one argument (a payload) and transform it in a certain way
