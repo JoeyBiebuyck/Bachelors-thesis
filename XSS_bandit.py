@@ -73,17 +73,18 @@ def create_XSS_transformations(amount: int):
     return all_techniques
 
 if __name__ == "__main__":
-    # transformations = create_XSS_transformations(20)
-    # outputs = [transform("test") for transform in transformations]
-    # print(outputs)
+    transformations = create_XSS_transformations(20)
+    outputs = [transform("test") for transform in transformations]
+    print(outputs)
 
-    # for x in range(10):
-    #     full_ip = "http://127.0.0.1:8001" + "/search/?q=" + str(random.choice(outputs))
-    #     r = requests.get(full_ip)
+    for x in range(8192):
+        full_ip = "http://127.0.0.1:8000" + "/search/?q=" + str(1)
+        r = requests.get(full_ip)
 
-    #     status = r.status_code
+        print(x)
+        status = r.status_code
 
-    #     print(status)
+        print(status)
 
     # base_payload = "alert('Hi!')"
     # transformations_ = XSS_transformations(20)
