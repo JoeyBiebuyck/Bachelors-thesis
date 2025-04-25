@@ -22,6 +22,9 @@ def XSS_bandit(n_arms: int):
         return lambda: send_and_get_result(payload_)
     arms = list(map(reward_fn, transformed_payloads))
     return Bandit(arms)
+
+# create a session so each new get request does not establish a new connection
+session = requests.Session()
     
 def send_and_get_result(payload_):
     engine_to_ip_dict = {"weak_security_website": "http://127.0.0.1:8000", "medium_security_website": "http://127.0.0.1:8001", "strict_security_website": "http://127.0.0.1:8002"}
@@ -35,7 +38,7 @@ def send_and_get_result(payload_):
 
     # 2nd send the payload to that server
     full_ip = ip + "/search/?q=" + str(payload_)
-    r = requests.get(full_ip)
+    r = session.get(full_ip)
 
     # 3rd receive a HTTP response of that server (this will be either 200 (success) or 404 (fail))
     status = r.status_code
