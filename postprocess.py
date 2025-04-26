@@ -43,8 +43,7 @@ real_m_top = np.argsort(-real_means)[:args.m]
 #print the output header
 print("t," + args.stat, flush=True)
 
-file_path = os.path.join('results', args.csv_fn)
-with open(file_path) as csv_file:
+with open(args.csv_fn) as csv_file:
     read_csv = csv.reader(csv_file, delimiter=',')
     header = next(read_csv)
     #first column is the time, the rest are the top arms
