@@ -11,7 +11,9 @@ import numpy as np
 #     return len(XSS_transformations())
 
 def XSS_transformations(n_arms):
-    return create_XSS_transformations(n_arms) # fill this list with functions that take one argument (a payload) and transform it in a certain way
+    transformations = create_XSS_transformations(n_arms) # fill this list with functions that take one argument (a payload) and transform it in a certain way
+    random.Random(1).shuffle(transformations)
+    return transformations
 
 def XSS_bandit(n_arms: int):
     n = n_arms
@@ -19,7 +21,6 @@ def XSS_bandit(n_arms: int):
     transformations_ = XSS_transformations(n_arms)
     #print(f"the transformations are {transformations_}")
     transformed_payloads = list(transformation(base_payload) for transformation in transformations_) # a list of identifiers
-    random.Random(1).shuffle(transformed_payloads) # The seed of this shuffle decides what technique will be associated with each arm
     print(f"the transformed payloads are {transformed_payloads}")
     def reward_fn(payload_):
         return lambda: send_and_get_result(payload_)
@@ -117,71 +118,6 @@ if __name__ == "__main__":
     for i in range(10):
         x = np.random.binomial(1, 1)
         print(x)
-
-
-
-# manually defined transformations: 
-
-# def transformation_1(base_payload: str):
-#     return 1
-
-# def transformation_2(base_payload: str):
-#     return 2
-
-# def transformation_3(base_payload: str):
-#     return 3
-
-# def transformation_4(base_payload: str):
-#     return 4
-
-# def transformation_5(base_payload: str):
-#     return 5
-
-# def transformation_6(base_payload: str):
-#     return 6
-
-# def transformation_7(base_payload: str):
-#     return 7
-
-# def transformation_8(base_payload: str):
-#     return 8
-
-# def transformation_9(base_payload: str):
-#     return 9
-
-# def transformation_10(base_payload: str):
-#     return 10
-
-# def transformation_11(base_payload: str):
-#     return 11
-
-# def transformation_12(base_payload: str):
-#     return 12
-
-# def transformation_13(base_payload: str):
-#     return 13
-
-# def transformation_14(base_payload: str):
-#     return 14
-
-# def transformation_15(base_payload: str):
-#     return 15
-
-# def transformation_16(base_payload: str):
-#     return 16
-
-# def transformation_17(base_payload: str):
-#     return 17
-
-# def transformation_18(base_payload: str):
-#     return 18
-
-# def transformation_19(base_payload: str):
-#     return 19
-
-# def transformation_20(base_payload: str):
-#     return 20
-
 
 
 # Properly implemented XSS payload transformations
