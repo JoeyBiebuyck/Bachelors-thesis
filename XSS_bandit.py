@@ -1,8 +1,10 @@
 import requests
 import random
 from bfts.bandit import Bandit
+import numpy as np
 
-#random.seed(1)
+# random.seed(1)
+# np.random.seed(1)
 
 # does not work with dynamic arms
 # def n_arms():
@@ -12,12 +14,13 @@ def XSS_transformations(n_arms):
     return create_XSS_transformations(n_arms) # fill this list with functions that take one argument (a payload) and transform it in a certain way
 
 def XSS_bandit(n_arms: int):
+    n = n_arms
     base_payload = "alert('Hi!')"
     transformations_ = XSS_transformations(n_arms)
     #print(f"the transformations are {transformations_}")
-    transformed_payloads = list(transformation(base_payload) for transformation in transformations_)
-    print(transformed_payloads)
+    transformed_payloads = list(transformation(base_payload) for transformation in transformations_) # a list of identifiers
     random.Random(1).shuffle(transformed_payloads) # The seed of this shuffle decides what technique will be associated with each arm
+    print(f"the transformed payloads are {transformed_payloads}")
     def reward_fn(payload_):
         return lambda: send_and_get_result(payload_)
     arms = list(map(reward_fn, transformed_payloads))
@@ -27,12 +30,12 @@ def XSS_bandit(n_arms: int):
 session = requests.Session()
     
 def send_and_get_result(payload_):
-    engine_to_ip_dict = {"weak_security_website": "http://127.0.0.1:8000", "medium_security_website": "http://127.0.0.1:8001", "strict_security_website": "http://127.0.0.1:8002"}
+    website_to_ip_dict = {"weak_security_website": "http://127.0.0.1:8000", "medium_security_website": "http://127.0.0.1:8001", "strict_security_website": "http://127.0.0.1:8002"}
 
-    # 1st choose which server to send it to (which browser engine)
-    engines = ["weak_security_website", "medium_security_website", "strict_security_website"]
-    engine = random.choice(engines)
-    ip = engine_to_ip_dict[engine]
+    # 1st choose which server to send it to (which security filter it will get passed through)
+    websites = ["weak_security_website", "medium_security_website", "strict_security_website"]
+    website = random.choice(websites)
+    ip = website_to_ip_dict[website]
 
     #print(f"sending packet to {engine}")
 
@@ -43,15 +46,17 @@ def send_and_get_result(payload_):
     # 3rd receive a HTTP response of that server (this will be either 200 (success) or 404 (fail))
     status = r.status_code
 
-    print(f"stuur {payload_} naar {engine}, dit is de status {status}")
+    #print(f"stuur {payload_} naar {engine}, dit is de status {status}")
 
     # 4th return this response
+    # we respond 0 when the XSS attack succeeds, since m-top bandits return the arms with the lowest means
     if status == 200:
-        # print("giving 1")
-        return 1
-    elif status == 404:
-        # print("not giving them anything")
+        # print("success")
         return 0
+    elif status == 404:
+        # print("failure")
+        return 1
+
 
 # Simulations of XSS transformations:
 
@@ -76,19 +81,19 @@ def create_XSS_transformations(amount: int):
     return all_techniques
 
 if __name__ == "__main__":
-    transformations = create_XSS_transformations(20)
-    outputs = [transform("test") for transform in transformations]
-    print(outputs)
+    # transformations = create_XSS_transformations(20)
+    # outputs = [transform("test") for transform in transformations]
+    # print(outputs)
 
-    for x in range(8192):
-        full_ip = "http://127.0.0.1:8000" + "/search/?q=" + str(1)
-        r = requests.get(full_ip)
+    # for x in range(8192):
+    #     full_ip = "http://127.0.0.1:8000" + "/search/?q=" + str(random.choice(outputs))
+    #     r = requests.get(full_ip)
 
-        print(x)
-        status = r.status_code
+    #     print(x)
+    #     status = r.status_code
 
-        print(status)
-
+    #     print(status)
+    # 
     # base_payload = "alert('Hi!')"
     # transformations_ = XSS_transformations(20)
     # print(f"the transformations are {transformations_}")
@@ -103,7 +108,15 @@ if __name__ == "__main__":
     #     arm = random.choice(arms)
     #     reward = arm()
     #     print(f"This is the reward {reward}")
-    pass
+    # pass
+
+    # test to see whether bandit returns a value
+    # bandit = XSS_bandit(20)
+    # reward = bandit.play(random.randint(0, 19))
+    # print(f"reward is {reward}")
+    for i in range(10):
+        x = np.random.binomial(1, 1)
+        print(x)
 
 
 
