@@ -21,7 +21,7 @@ def XSS_bandit(n_arms: int):
     transformations_ = XSS_transformations(n_arms)
     #print(f"the transformations are {transformations_}")
     transformed_payloads = list(transformation(base_payload) for transformation in transformations_) # a list of identifiers
-    print(f"the transformed payloads are {transformed_payloads}")
+    #print(f"the transformed payloads are {transformed_payloads}")
     def reward_fn(payload_):
         return lambda: send_and_get_result(payload_)
     arms = list(map(reward_fn, transformed_payloads))
