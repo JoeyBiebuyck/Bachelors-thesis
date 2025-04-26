@@ -208,3 +208,6 @@ medium_security_website/homepage/__pycache__/views.cpython-313.pyc
 weak_security_website/homepage/__pycache__/views.cpython-313.pyc
 strict_security_website/homepage/__pycache__/views.cpython-313.pyc
 medium_security_website/homepage/__pycache__/views.cpython-313.pyc
+
+# the csv files of the experiments
+results/
