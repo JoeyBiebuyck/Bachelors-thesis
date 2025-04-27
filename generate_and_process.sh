@@ -2,7 +2,13 @@
 
 start_time=$(date +%s)
 batch_start_time=$(date +%s)
+
 dir="results"
+experiment_name="20_arms_100t_plot"
+full_dir="${dir}/${experiment_name}"
+mkdir -p "$full_dir"
+mkdir -p "$full_dir/results"
+
 amount_of_timesteps=100
 
 GREEN='\033[0;32m'
@@ -45,12 +51,20 @@ echo -e "${GREEN}Script started at $(date)${NC}"
 
 for r in {1..100}
 do
-python run_atlucb_xss.py -s $r -t $amount_of_timesteps -m 2 > $dir/atlucb.$r.csv
-python postprocess.py -m 2 -c $dir/atlucb.$r.csv -s prop_of_success > "$dir/atlucb-$r.prop_of_success"
-python run_uniform_xss.py -s $r -t $amount_of_timesteps -m 2 > $dir/uniform.$r.csv
-python postprocess.py -m 2 -c $dir/uniform.$r.csv -s prop_of_success > "$dir/uniform-$r.prop_of_success"
+python run_atlucb_xss.py -s $r -t $amount_of_timesteps -m 2 > ${full_dir}/atlucb.$r.csv
+python postprocess.py -m 2 -c ${full_dir}/atlucb.$r.csv -s prop_of_success > "${full_dir}/atlucb-$r.prop_of_success"
+python run_uniform_xss.py -s $r -t $amount_of_timesteps -m 2 > ${full_dir}/uniform.$r.csv
+python postprocess.py -m 2 -c ${full_dir}/uniform.$r.csv -s prop_of_success > "${full_dir}/uniform-$r.prop_of_success"
+
 print_elapsed
 print_batch_time
+
+if [ $r -eq 1 ]; then
+    current=$(date +%s)
+    batch_time=$((current - start_time))
+    echo -e "${YELLOW}Estimated time for entire process: $(format_time $((batch_time * 100)))${NC}"
+fi
+
 echo "Current progress: $r%"
 done
 
@@ -59,4 +73,4 @@ total_elapsed=$((end_time - start_time))
 
 echo -e "${RED}Generating completed in $(format_time $total_elapsed)${NC}"
 
-python merge_and_plot.py
+python merge_and_plot.py -d $full_dir
