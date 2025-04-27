@@ -4,7 +4,7 @@ start_time=$(date +%s)
 batch_start_time=$(date +%s)
 
 dir="results"
-experiment_name="20_arms_100t_plot"
+experiment_name="4_arms_100t_plot"
 full_dir="${dir}/${experiment_name}"
 mkdir -p "$full_dir"
 mkdir -p "$full_dir/results"
@@ -56,14 +56,14 @@ python postprocess.py -m 2 -c ${full_dir}/atlucb.$r.csv -s prop_of_success > "${
 python run_uniform_xss.py -s $r -t $amount_of_timesteps -m 2 > ${full_dir}/uniform.$r.csv
 python postprocess.py -m 2 -c ${full_dir}/uniform.$r.csv -s prop_of_success > "${full_dir}/uniform-$r.prop_of_success"
 
-print_elapsed
-print_batch_time
-
 if [ $r -eq 1 ]; then
     current=$(date +%s)
     batch_time=$((current - start_time))
     echo -e "${YELLOW}Estimated time for entire process: $(format_time $((batch_time * 100)))${NC}"
 fi
+
+print_elapsed
+print_batch_time
 
 echo "Current progress: $r%"
 done
