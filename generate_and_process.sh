@@ -3,7 +3,7 @@
 start_time=$(date +%s)
 batch_start_time=$(date +%s)
 dir="results"
-amount_of_timesteps=1000
+amount_of_timesteps=100
 
 GREEN='\033[0;32m'
 RED='\033[0;31m'
