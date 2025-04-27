@@ -4,6 +4,8 @@ from django.template import loader
 import random
 #from run_atlucb_xss import n_arms
 
+n_arms = 20
+
 def homepage(request):
     template = loader.get_template('home.html')
     return HttpResponse(template.render())
@@ -13,7 +15,7 @@ def search_view(request):
 
     # What to do with a specific query, eg. sampling from a binomial distribution and returning success or failure
     # could also do the below filtering by putting a < in the if clause
-    strongestDisarmedInput = int(20 * 0.50)
+    strongestDisarmedInput = int(n_arms * 0.50)
     disarmedInputs = [str(x) for x in list(range(1, strongestDisarmedInput+1))] # the weakest 50% (10) of the XSS payloads get sanitized by this website's filter (there are 20 transformations possible)
 
     # returning succes/failure
