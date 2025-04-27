@@ -1,11 +1,14 @@
 #!/bin/bash
 
 start_time=$(date +%s)
+batch_start_time=$(date +%s)
 dir="results"
+amount_of_timesteps=1000
 
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
 NC='\033[0m' # no color
 
 # Function to format elapsed time in a readable format
@@ -31,15 +34,23 @@ print_elapsed() {
     echo -e "${YELLOW}Elapsed time: $(format_time $elapsed)${NC}"
 }
 
+print_batch_time() {
+    local current=$(date +%s)
+    local elapsed=$((current - batch_start_time))
+    echo -e "${BLUE}Batch time: $(format_time $elapsed)${NC}"
+    batch_start_time=$(date +%s) # update the batch time so the next batch starts correctly
+}
+
 echo -e "${GREEN}Script started at $(date)${NC}"
 
 for r in {1..100}
 do
-python run_atlucb_xss.py -s $r -t 10000 -m 2 > $dir/atlucb.$r.csv
+python run_atlucb_xss.py -s $r -t $amount_of_timesteps -m 2 > $dir/atlucb.$r.csv
 python postprocess.py -m 2 -c $dir/atlucb.$r.csv -s prop_of_success > "$dir/atlucb-$r.prop_of_success"
-python run_uniform_xss.py -s $r -t 10000 -m 2 > $dir/uniform.$r.csv
+python run_uniform_xss.py -s $r -t $amount_of_timesteps -m 2 > $dir/uniform.$r.csv
 python postprocess.py -m 2 -c $dir/uniform.$r.csv -s prop_of_success > "$dir/uniform-$r.prop_of_success"
 print_elapsed
+print_batch_time
 echo "Current progress: $r%"
 done
 
