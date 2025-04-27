@@ -8,20 +8,22 @@ from start_server import start_server
 from bfts.algorithms.atlucb import AT_LUCB
 from bfts.run_utils import print_header, run
 
-n_arms = 20 # MUST MANUALLY UPDATE EACH views.py FILE
+#from global_variables import n_arms
+
+#n_arms = 10 # MUST MANUALLY UPDATE EACH views.py FILE
 
 parser = ArgumentParser(description="XSS ATLUCB")
 
 parser.add_argument("-s", "--seed", dest="seed", type=int, required=True)
 parser.add_argument("-t", "--time", dest="time", type=int, required=True)
-#parser.add_argument("-a", "--arms", dest="arms", type=int, required=True)
+parser.add_argument("-n", "--n_arms", dest="arms", type=int, required=True)
 parser.add_argument("-m", "--m", dest="m",type=int, required=True)
 parser.add_argument("-e", "--environment", dest="env", type=str, required=False)
 
 args = parser.parse_args()
 
 np.random.seed(args.seed)
-bandit = XSS_bandit(n_arms)
+bandit = XSS_bandit(args.arms)
 #print(f"bandit has {bandit.arms} arms")
 
 # it is possible to start the servers here, but the terminal output will be filled with the server console outputs

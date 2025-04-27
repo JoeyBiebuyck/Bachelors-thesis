@@ -4,13 +4,14 @@ start_time=$(date +%s)
 batch_start_time=$(date +%s)
 
 dir="results"
-experiment_name="50_arms_1000t_plot"
+experiment_name="10_arms_100t_plot"
 full_dir="${dir}/${experiment_name}"
 mkdir -p "$full_dir"
 mkdir -p "$full_dir/results"
 
-amount_of_timesteps=1000
-m_top=10
+amount_of_timesteps=100
+n_arms = 20
+m_top=2
 
 GREEN='\033[0;32m'
 RED='\033[0;31m'
@@ -52,10 +53,10 @@ echo -e "${GREEN}Script started at $(date)${NC}"
 
 for r in {1..100}
 do
-python run_atlucb_xss.py -s $r -t $amount_of_timesteps -m $m_top > ${full_dir}/atlucb.$r.csv
-python postprocess.py -m $m_top -c ${full_dir}/atlucb.$r.csv -s prop_of_success > "${full_dir}/atlucb-$r.prop_of_success"
-python run_uniform_xss.py -s $r -t $amount_of_timesteps -m $m_top > ${full_dir}/uniform.$r.csv
-python postprocess.py -m $m_top -c ${full_dir}/uniform.$r.csv -s prop_of_success > "${full_dir}/uniform-$r.prop_of_success"
+python run_atlucb_xss.py -s $r -t $amount_of_timesteps -n $n_arms -m $m_top > ${full_dir}/atlucb.$r.csv
+python postprocess.py -m $m_top -c ${full_dir}/atlucb.$r.csv -n $n_arms -s prop_of_success > "${full_dir}/atlucb-$r.prop_of_success"
+python run_uniform_xss.py -s $r -t $amount_of_timesteps -n $n_arms -m $m_top > ${full_dir}/uniform.$r.csv
+python postprocess.py -m $m_top -c ${full_dir}/uniform.$r.csv -n $n_arms -s prop_of_success > "${full_dir}/uniform-$r.prop_of_success"
 
 if [ $r -eq 1 ]; then
     current=$(date +%s)

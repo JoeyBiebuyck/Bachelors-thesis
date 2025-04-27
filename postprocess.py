@@ -4,18 +4,18 @@ import numpy as np
 from XSS_bandit import XSS_transformations, XSS_bandit
 import bfts.environments as environments
 import os
+#from global_variables import n_arms
 
 parser = ArgumentParser(description="postprocess")
 
 parser.add_argument("-c", "--csv_fn", dest="csv_fn", type=str, required=True)
-# parser.add_argument("-e", "--environment", dest="env", type=str, required=False)
+parser.add_argument("-n", "--n_arms", dest="arms", type=int, required=True)
 parser.add_argument("-s", "--statistic", dest="stat", type=str, required=True)
 parser.add_argument("-m", "--m", dest="m", type=int, required=True)
 
 args = parser.parse_args()
 
-
-n_techniques = 20
+n_techniques = args.arms
 website_1 = 0.25
 website_2 = 0.50
 website_3 = 0.75
