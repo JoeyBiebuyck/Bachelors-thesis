@@ -80,7 +80,7 @@ for method, color in zip(["Uniform", "AT-LUCB"], ["blue", "green"]):
     )
 
 # Set the axis labels with LaTeX formatting
-plt.xlabel(r'$\#$ of samples $\times 10^4$', fontsize=14)
+plt.xlabel(r'$\#$ of samples', fontsize=14) # $\times 10^4$
 plt.ylabel(r'$|J(t) \cap J^*|/m$', fontsize=14)
 
 # Configure the legend
