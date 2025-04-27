@@ -2,29 +2,39 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
+from argparse import ArgumentParser
+
+
+parser = ArgumentParser(description="XSS merge and plot")
+
+parser.add_argument("-d", "--dir", dest="dir", type=str, required=True) # directory it will find the files in
+
+args = parser.parse_args()
+
+dir = args.dir
 
 # merge the experiments
 
-merged_atlucb_df = pd.read_csv("results/atlucb-1.prop_of_success")
+merged_atlucb_df = pd.read_csv(dir + "/atlucb-1.prop_of_success")
 merged_atlucb_df.rename(columns={"prop_of_success": "prop_of_success_1"})
 
 for i in range(2, 101):
     old_df = merged_atlucb_df
-    new_filename = "results/atlucb-" + str(i) + ".prop_of_success"
+    new_filename = dir + "/atlucb-" + str(i) + ".prop_of_success"
     new_df = pd.read_csv(new_filename)
     merged_atlucb_df = pd.merge(old_df, new_df, on="t", suffixes=("", f"_{i}"))
 
-merged_uniform_df = pd.read_csv("results/uniform-1.prop_of_success")
+merged_uniform_df = pd.read_csv(dir + "/uniform-1.prop_of_success")
 merged_uniform_df.rename(columns={"prop_of_success": "prop_of_success_1"})
 
 for i in range(2, 101):
     old_df = merged_uniform_df
-    new_filename = "results/uniform-" + str(i) + ".prop_of_success"
+    new_filename = dir + "/uniform-" + str(i) + ".prop_of_success"
     new_df = pd.read_csv(new_filename)
     merged_uniform_df = pd.merge(old_df, new_df, on="t", suffixes=("", f"_{i}"))
 
-merged_atlucb_df.to_csv("merged_atlucb_success_prop.csv", index=False)
-merged_uniform_df.to_csv("merged_uniform_success_prop.csv", index=False)
+merged_atlucb_df.to_csv(dir + "/results/merged_atlucb_success_prop.csv", index=False)
+merged_uniform_df.to_csv(dir + "/results/merged_uniform_success_prop.csv", index=False)
 
 # plot the experiments
 
@@ -54,8 +64,10 @@ def make_csv_plotable(file_path, method_name):
 
     return plotable_df
 
-uniform_df = make_csv_plotable("merged_uniform_success_prop.csv", "Uniform")
-atlucb_df = make_csv_plotable("merged_atlucb_success_prop.csv", "AT-LUCB")
+results_dir = dir + "/results"
+
+uniform_df = make_csv_plotable(results_dir + "/merged_uniform_success_prop.csv", "Uniform")
+atlucb_df = make_csv_plotable(results_dir + "/merged_atlucb_success_prop.csv", "AT-LUCB")
 
 combined_df = pd.concat([uniform_df, atlucb_df], ignore_index=True)
 
@@ -95,7 +107,7 @@ sns.despine()
 # Add a tight layout
 plt.tight_layout()
 
-plt.savefig('first_plot.png')
+plt.savefig(results_dir + '/first_plot.png')
 
 # Show the plot
 plt.show()
