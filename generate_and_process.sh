@@ -4,14 +4,14 @@ start_time=$(date +%s)
 batch_start_time=$(date +%s)
 
 dir="results"
-experiment_name="10_arms_100t_plot"
+experiment_name="20arms_100t_newATLUCB"
 full_dir="${dir}/${experiment_name}"
 mkdir -p "$full_dir"
 mkdir -p "$full_dir/results"
 
 amount_of_timesteps=100
-n_arms = 20
-m_top=2
+n_arms=20
+m_top=3
 
 GREEN='\033[0;32m'
 RED='\033[0;31m'
