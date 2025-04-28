@@ -1,9 +1,9 @@
-from bfts.environments.gaussian_jun import linear_means,linear_bandit,polynomial_means,polynomial_bandit
-from bfts.environments.captions_jun import captions_means,captions_bandit
-from bfts.environments.poisson_olivier import poisson_oli_means,poisson_oli_bandit
-from bfts.environments.poisson_exp import poisson_exp_means,poisson_exp_bandit
-from bfts.environments.scaled_gaussian import scaled_gaussian_means,scaled_gaussian_bandit
-import bfts.environments.gaussian_jun_lin_var as gj_linvar
+from environments.gaussian_jun import linear_means,linear_bandit,polynomial_means,polynomial_bandit
+from environments.captions_jun import captions_means,captions_bandit
+from environments.poisson_olivier import poisson_oli_means,poisson_oli_bandit
+from environments.poisson_exp import poisson_exp_means,poisson_exp_bandit
+from environments.scaled_gaussian import scaled_gaussian_means,scaled_gaussian_bandit
+import environments.gaussian_jun_lin_var as gj_linvar
 import ast
 
 def parse_args(s):

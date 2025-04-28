@@ -2,7 +2,6 @@ from argparse import ArgumentParser
 import csv
 import numpy as np
 from XSS_bandit import XSS_transformations, XSS_bandit
-import bfts.environments as environments
 import os
 #from global_variables import n_arms
 

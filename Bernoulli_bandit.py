@@ -2,7 +2,7 @@ import requests
 import random
 from bfts.bandit import Bandit
 import numpy as np
-from bfts.environments.gaussian_jun import linear_means
+# from bfts.environments.gaussian_jun import linear_means
 
 def linear_means_no_shuffle(n): # this is identical to the linear_means function, except for that it does not shuffle the means (for easy verification of correct arm identification)
     # mean_fn = lambda i: .9 * (n - i) / (n - 1)
