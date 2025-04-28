@@ -2,7 +2,7 @@ import numpy as np
 from argparse import ArgumentParser
 
 from Bernoulli_bandit import Bernoulli_bandit
-from bfts.algorithms.atlucb import AT_LUCB 
+from bfts.algorithms.uniform import Uniform 
 from bfts.run_utils import print_header,run
 
 parser = ArgumentParser(description="ATLUCB")
@@ -22,5 +22,5 @@ print_header(args.m)
 sigma=0.5
 alpha=0.99
 epsilon=0
-algo = AT_LUCB(bandit, args.m, sigma, alpha, epsilon)
+algo = Uniform(bandit, args.m)
 run(algo, args.time)
