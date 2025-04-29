@@ -80,25 +80,25 @@ class AT_LUCB:
         self.mean_per_arm[arm_i] = np.mean(self.reward_per_arm[arm_i])
 
     def step(self, t): # do this at each timestep t
-        if self.term(t, self.sigma(self.S[t - 1]), self.epsilon): # if there is still room for improvement
+        if self.term(t, self.sigma(self.S[t - 1]), self.epsilon): # if the terminating condition is met
             s = self.S[t - 1] # take the S at the previous timestep
-            while self.term(t, self.sigma(s), self.epsilon): # while there is still room for improvement
+            while self.term(t, self.sigma(s), self.epsilon): # while the terminating condition is still met
                 s = s + 1
             self.S.append(s)
             self.Jt = self.top_m()
         else:
-            self.S.append(self.S[t-1])
-            if self.S[t] == 1:
-                self.Jt = self.top_m()
+            self.S.append(self.S[t-1]) # if the terminating condition is not met, use the same confidence interval
+            if self.S[t] == 1: # S starts at 1, so in the first timestep this will be true
+                self.Jt = self.top_m() # initial top-m
 
         lowest_index = self.l(t, self.sigma(self.S[t - 1]))
         low_reward = self.bandit.play(lowest_index)
-        self.has_arm_been_played[lowest_index] = 1
+        self.has_arm_been_played[lowest_index] += 1
         self.add_reward(lowest_index, low_reward)
 
         highest_index = self.h(t, self.sigma(self.S[t - 1]))
         high_reward = self.bandit.play(highest_index)
-        self.has_arm_been_played[highest_index] = 1
+        self.has_arm_been_played[highest_index] += 1
         self.add_reward(highest_index, high_reward)
 
-        return self.Jt
+        return self.Jt # doesnt immediately recalculate top-m
