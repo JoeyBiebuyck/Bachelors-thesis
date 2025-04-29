@@ -2,7 +2,7 @@ import numpy as np
 from argparse import ArgumentParser
 
 import environments
-from algorithms.atlucb import AT_LUCB 
+from bfts.algorithms.atlucb import AT_LUCB 
 from run_utils import print_header,run
 
 parser = ArgumentParser(description="ATLUCB")

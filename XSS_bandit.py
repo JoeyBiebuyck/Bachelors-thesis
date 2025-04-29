@@ -3,13 +3,6 @@ import random
 from bfts.bandit import Bandit
 import numpy as np
 
-# random.seed(1)
-# np.random.seed(1)
-
-# does not work with dynamic arms
-# def n_arms():
-#     return len(XSS_transformations())
-
 def XSS_transformations(n_arms):
     transformations = create_XSS_transformations(n_arms) # fill this list with functions that take one argument (a payload) and transform it in a certain way
     random.Random(1).shuffle(transformations)
@@ -47,15 +40,11 @@ def send_and_get_result(payload_):
     # 3rd receive a HTTP response of that server (this will be either 200 (success) or 404 (fail))
     status = r.status_code
 
-    #print(f"stuur {payload_} naar {engine}, dit is de status {status}")
-
     # 4th return this response
     # we respond 0 when the XSS attack succeeds, since m-top bandits return the arms with the lowest means
     if status == 200:
-        # print("success")
         return 0
     elif status == 404:
-        # print("failure")
         return 1
 
 

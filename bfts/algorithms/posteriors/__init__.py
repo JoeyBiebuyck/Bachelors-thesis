@@ -1,11 +1,11 @@
 import ast
 
-from algorithms.posteriors.gaussian import Gaussian
-from algorithms.posteriors.truncated_gaussian import TruncatedGaussian 
-from algorithms.posteriors.dirichlet import Dirichlet 
-from algorithms.posteriors.gamma import Gamma 
-from algorithms.posteriors.t_distribution import TDistribution 
-from algorithms.posteriors.truncated_t_distribution import TruncatedTDistribution 
+from bfts.algorithms.posteriors.gaussian import Gaussian
+from bfts.algorithms.posteriors.truncated_gaussian import TruncatedGaussian 
+from bfts.algorithms.posteriors.dirichlet import Dirichlet 
+from bfts.algorithms.posteriors.gamma import Gamma 
+from bfts.algorithms.posteriors.t_distribution import TDistribution 
+from bfts.algorithms.posteriors.truncated_t_distribution import TruncatedTDistribution 
 
 def parse_args(s):
     args_str = s[s.find("{"):s.find("}")+1]

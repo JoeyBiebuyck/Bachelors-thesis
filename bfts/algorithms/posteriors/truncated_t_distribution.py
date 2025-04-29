@@ -4,7 +4,7 @@ import scipy
 from scipy.stats import t
 from scipy.stats import uniform
 
-from algorithms.posteriors.t_distribution import TDistribution
+from bfts.algorithms.posteriors.t_distribution import TDistribution
 
 class TruncatedTDistribution():
     def __init__(self, alpha, a, b):

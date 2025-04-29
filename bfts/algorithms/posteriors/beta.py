@@ -1,7 +1,7 @@
 import numpy as np
 
 #Beta posterior, resuling from a conjugate Beta prior
-class BetaPosterior:
+class BetaPosterior():
     #Initialise with hyperparameters to the Beta prior,
     #by default hyperparameters to the Jeffreys prior are chosen
     def __init__(self, alpha=0.5, beta=0.5):

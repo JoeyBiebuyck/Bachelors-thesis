@@ -2,7 +2,7 @@ import numpy as np
 from argparse import ArgumentParser
 
 import environments
-from algorithms.uniform import Uniform
+from bfts.algorithms.uniform import Uniform
 from run_utils import print_header,run
 
 parser = ArgumentParser(description="Uniform m-top")
