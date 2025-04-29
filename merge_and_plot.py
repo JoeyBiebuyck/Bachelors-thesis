@@ -15,6 +15,15 @@ dir = args.dir
 
 # merge the experiments
 
+merged_bfts_df = pd.read_csv(dir + "/bfts-1.prop_of_success")
+merged_bfts_df.rename(columns={"prop_of_success": "prop_of_success_1"})
+
+for i in range(2, 101):
+    old_df = merged_bfts_df
+    new_filename = dir + "/bfts-" + str(i) + ".prop_of_success"
+    new_df = pd.read_csv(new_filename)
+    merged_bfts_df = pd.merge(old_df, new_df, on="t", suffixes=("", f"_{i}"))
+
 merged_atlucb_df = pd.read_csv(dir + "/atlucb-1.prop_of_success")
 merged_atlucb_df.rename(columns={"prop_of_success": "prop_of_success_1"})
 
@@ -33,6 +42,7 @@ for i in range(2, 101):
     new_df = pd.read_csv(new_filename)
     merged_uniform_df = pd.merge(old_df, new_df, on="t", suffixes=("", f"_{i}"))
 
+merged_bfts_df.to_csv(dir + "/results/merged_bfts_success_prop.csv", index=False)
 merged_atlucb_df.to_csv(dir + "/results/merged_atlucb_success_prop.csv", index=False)
 merged_uniform_df.to_csv(dir + "/results/merged_uniform_success_prop.csv", index=False)
 
@@ -68,10 +78,11 @@ results_dir = dir + "/results"
 
 uniform_df = make_csv_plotable(results_dir + "/merged_uniform_success_prop.csv", "Uniform")
 atlucb_df = make_csv_plotable(results_dir + "/merged_atlucb_success_prop.csv", "AT-LUCB")
+bfts_df = make_csv_plotable(results_dir + "/merged_bfts_success_prop.csv", "BFTS")
 
-combined_df = pd.concat([uniform_df, atlucb_df], ignore_index=True)
+combined_df = pd.concat([uniform_df, atlucb_df, bfts_df], ignore_index=True)
 
-for method, color in zip(["Uniform", "AT-LUCB"], ["blue", "green"]):
+for method, color in zip(["Uniform", "AT-LUCB", "BFTS"], ["blue", "green", "red"]):
     method_data = combined_df[combined_df['method'] == method]
 
     plt.fill_between(
@@ -107,7 +118,9 @@ sns.despine()
 # Add a tight layout
 plt.tight_layout()
 
-plt.savefig(results_dir + '/first_plot.png')
+#TODO MAAK DE NAAM DE DIR ZONDER DE EERSTE /results
+parent_dir, experiment_name = dir.split('/')
+plt.savefig(results_dir + '/' + experiment_name + '.png')
 
 # Show the plot
 plt.show()
