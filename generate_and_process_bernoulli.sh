@@ -4,14 +4,14 @@ start_time=$(date +%s)
 batch_start_time=$(date +%s)
 
 dir="results"
-experiment_name="20_arms_1000t_shuffled_bernoulli"
+experiment_name="20arms_100t_shuffled_bernoulli"
 full_dir="${dir}/${experiment_name}"
 mkdir -p "$full_dir"
 mkdir -p "$full_dir/results"
 
-amount_of_timesteps=1000
-n_arms=20
-m_top=4
+amount_of_timesteps=250
+n_arms=50
+m_top=7
 
 GREEN='\033[0;32m'
 RED='\033[0;31m'
@@ -53,6 +53,8 @@ echo -e "${GREEN}Script started at $(date)${NC}"
 
 for r in {1..100}
 do
+python run_bfts_bernoulli.py -s $r -t $amount_of_timesteps -n $n_arms -m $m_top > ${full_dir}/bfts.$r.csv
+python postprocess_bernoulli.py -m $m_top -c ${full_dir}/bfts.$r.csv -n $n_arms -s prop_of_success > "${full_dir}/bfts-$r.prop_of_success"
 python run_atlucb_bernoulli.py -s $r -t $amount_of_timesteps -n $n_arms -m $m_top > ${full_dir}/atlucb.$r.csv
 python postprocess_bernoulli.py -m $m_top -c ${full_dir}/atlucb.$r.csv -n $n_arms -s prop_of_success > "${full_dir}/atlucb-$r.prop_of_success"
 python run_uniform_bernoulli.py -s $r -t $amount_of_timesteps -n $n_arms -m $m_top > ${full_dir}/uniform.$r.csv
@@ -61,7 +63,11 @@ python postprocess_bernoulli.py -m $m_top -c ${full_dir}/uniform.$r.csv -n $n_ar
 if [ $r -eq 1 ]; then
     current=$(date +%s)
     batch_time=$((current - start_time))
-    echo -e "${YELLOW}Estimated time for entire process: $(format_time $((batch_time * 100)))${NC}"
+    if [ $batch_time -gt 0 ]; then
+        echo -e "${YELLOW}Estimated time for entire process: $(format_time $((batch_time * 100)))${NC}"
+    else
+        echo -e "${YELLOW}Estimated time for entire process: $(format_time 1)${NC}"
+    fi
 fi
 
 print_elapsed
