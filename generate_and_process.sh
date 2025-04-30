@@ -4,12 +4,12 @@ start_time=$(date +%s)
 batch_start_time=$(date +%s)
 
 dir="results"
-experiment_name="20arms_10000t"
+experiment_name="20arms_100t"
 full_dir="${dir}/${experiment_name}"
 mkdir -p "$full_dir"
 mkdir -p "$full_dir/results"
 
-amount_of_timesteps=10000
+amount_of_timesteps=100
 n_arms=20
 m_top=3
 

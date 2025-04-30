@@ -6,8 +6,6 @@ from XSS_bandit import XSS_bandit
 from bfts.algorithms.bfts import BFTS 
 from bfts.algorithms.posteriors.beta import BetaPosterior
 
-from bfts.run_utils import print_header, run
-
 parser = ArgumentParser(description="XSS BFTS")
 
 parser.add_argument("-s", "--seed", dest="seed", type=int, required=True)

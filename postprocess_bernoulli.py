@@ -1,8 +1,6 @@
 from argparse import ArgumentParser
 import csv
 import numpy as np
-from XSS_bandit import XSS_transformations, XSS_bandit
-import bfts.environments as environments
 import os
 from Bernoulli_bandit import linear_means_no_shuffle
 #from global_variables import n_arms
@@ -16,7 +14,6 @@ parser.add_argument("-m", "--m", dest="m", type=int, required=True)
 
 args = parser.parse_args()
 
-bandit = XSS_bandit(args.arms)
 means = linear_means_no_shuffle(args.arms)
 
 real_means = np.array(means)
