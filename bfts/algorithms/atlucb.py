@@ -42,7 +42,7 @@ class AT_LUCB:
 
     def U(self, t, a, sigma):
         mu = self.mean_per_arm[a]
-        if self.has_arm_been_played[a] == 0 and mu == 0.0:
+        if mu == 0.0:
             return float("inf")
         else:
             return mu + self.beta(len(self.reward_per_arm[a]), t, sigma)
