@@ -3,15 +3,15 @@
 start_time=$(date +%s)
 batch_start_time=$(date +%s)
 
-dir="results"
-experiment_name="50arms_250t_3m_shuffled_bernoulli"
-full_dir="${dir}/${experiment_name}"
-mkdir -p "$full_dir"
-mkdir -p "$full_dir/results"
-
 amount_of_timesteps=250
 n_arms=50
 m_top=3
+experiment_name="${n_arms}arms_${amount_of_timesteps}t_${m_top}m_shuffled_NoZeroMean_bernoulli"
+
+dir="results"
+full_dir="${dir}/${experiment_name}"
+mkdir -p "$full_dir"
+mkdir -p "$full_dir/results"
 
 GREEN='\033[0;32m'
 RED='\033[0;31m'
