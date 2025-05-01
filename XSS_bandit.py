@@ -2,6 +2,7 @@ import requests
 import random
 from bfts.bandit import Bandit
 import numpy as np
+import sys
 
 def XSS_transformations(n_arms):
     transformations = create_XSS_transformations(n_arms) # fill this list with functions that take one argument (a payload) and transform it in a certain way

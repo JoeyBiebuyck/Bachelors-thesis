@@ -33,7 +33,7 @@ for i in range(len(bandit.arms)):
         reward = bandit.play(i)
         algo.add_reward(i, reward)
         total_inits = total_inits + 1
-        print(str(total_inits) + "," + ",".join(["-1"]*args.m) + "," + str(i) + "," + str(reward), flush=True)
+        #print(str(total_inits) + "," + ",".join(["-1"]*args.m) + "," + str(i) + "," + str(reward), flush=True)
 
 for t in range(1, args.time + 1 - total_inits):
     (J_t, arm, reward) = algo.step(t)
