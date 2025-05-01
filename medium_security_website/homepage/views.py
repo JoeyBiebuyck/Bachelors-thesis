@@ -5,7 +5,7 @@ import random
 #from run_atlucb_xss import n_arms
 
 n_arms = 20
-disarm_rate = 1/3
+disarm_rate = 2/3
 
 def homepage(request):
     template = loader.get_template('home.html')
