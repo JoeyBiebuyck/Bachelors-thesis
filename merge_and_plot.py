@@ -119,20 +119,20 @@ plt.ylim(0, 1)
 sns.despine()
 
 # Add a tight layout
-plt.tight_layout()
+plt.tight_layout(pad=1.5, rect=[0, 0, 1, 0.95])
 parent_dir, experiment_name = dir.split('/')
 arms, timesteps, top_m, extra = experiment_name.split('_', 3)
 
 n = args.arms
 m = args.m
-t = args.t
+t = args.time
 
 plt.title(f"n={n}, m={m}, t={t}")
 
-plt.savefig(results_dir + '/' + experiment_name + '.png')
+plt.savefig(results_dir + '/' + experiment_name + '.png', dpi=300)
 
 # save ook op een plek die in git zit
-plt.savefig('result_plots/' + experiment_name + '.png')
+plt.savefig('result_plots/' + experiment_name + '.png', dpi=300)
 
 # Show the plot
 plt.show()
