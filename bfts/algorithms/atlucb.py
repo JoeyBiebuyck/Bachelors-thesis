@@ -24,7 +24,7 @@ class AT_LUCB:
     def beta(self, u, t, sigma1):
         k1 = 1.25
         n = len(self.bandit.arms)
-        return ((np.log(n*k1*(t**4)/sigma1))/(2*u))**0.5
+        return ((np.log(n*k1*(t**4)/sigma1))/((2*u)+(10**-10)))**0.5
 
     def term(self, t, sigma, epsilon):
         h = self.h(t, sigma) #max
@@ -35,17 +35,19 @@ class AT_LUCB:
         
     def L(self, t, a, sigma):
         mu = self.mean_per_arm[a]
-        if self.has_arm_been_played[a] == 0 and mu == 0.0:
-            return float("-inf")
-        else:
-            return mu - self.beta(len(self.reward_per_arm[a]), t, sigma)
+        # if self.has_arm_been_played[a] == 0 and mu == 0.0:
+        #     return float("-inf")
+        # else:
+        #     return mu - self.beta(len(self.reward_per_arm[a]), t, sigma)
+        return mu - self.beta(len(self.reward_per_arm[a]), t, sigma)
 
     def U(self, t, a, sigma):
         mu = self.mean_per_arm[a]
-        if mu == 0.0:
-            return float("inf")
-        else:
-            return mu + self.beta(len(self.reward_per_arm[a]), t, sigma)
+        # if mu == 0.0:
+        #     return float("inf")
+        # else:
+        #     return mu + self.beta(len(self.reward_per_arm[a]), t, sigma)
+        return mu + self.beta(len(self.reward_per_arm[a]), t, sigma)
 
     def h(self, t, sigma):
         min_ = sys.float_info.max
