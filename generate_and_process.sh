@@ -84,4 +84,4 @@ total_elapsed=$((end_time - start_time))
 
 echo -e "${RED}Generating completed in $(format_time $total_elapsed)${NC}"
 
-python merge_and_plot.py -d $full_dir
+python merge_and_plot.py -d $full_dir -n $n_arms -m $m_top -t $amount_of_timesteps

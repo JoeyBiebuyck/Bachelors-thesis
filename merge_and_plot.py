@@ -8,6 +8,9 @@ from argparse import ArgumentParser
 parser = ArgumentParser(description="XSS merge and plot")
 
 parser.add_argument("-d", "--dir", dest="dir", type=str, required=True) # directory it will find the files in
+parser.add_argument("-t", "--time", dest="time", type=int, required=True)
+parser.add_argument("-n", "--n_arms", dest="arms", type=int, required=True)
+parser.add_argument("-m", "--m", dest="m",type=int, required=True)
 
 args = parser.parse_args()
 
@@ -117,10 +120,19 @@ sns.despine()
 
 # Add a tight layout
 plt.tight_layout()
-
-#TODO MAAK DE NAAM DE DIR ZONDER DE EERSTE /results
 parent_dir, experiment_name = dir.split('/')
+arms, timesteps, top_m, extra = experiment_name.split('_', 3)
+
+n = args.arms
+m = args.m
+t = args.t
+
+plt.title(f"n={n}, m={m}, t={t}")
+
 plt.savefig(results_dir + '/' + experiment_name + '.png')
+
+# save ook op een plek die in git zit
+plt.savefig('result_plots/' + experiment_name + '.png')
 
 # Show the plot
 plt.show()
