@@ -8,7 +8,7 @@ import sys
 def linear_means_no_shuffle(n):
     # mean_fn = lambda i: .9 * (n - i) / (n - 1)
     # means = list(map(mean_fn, range(n)))
-    means = np.linspace(sys.float_info.min, 1, n)
+    means = np.linspace(0, 1, n)
     means = list(means)
     random.Random(1).shuffle(means)
     return means

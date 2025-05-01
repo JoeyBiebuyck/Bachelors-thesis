@@ -4,10 +4,10 @@ start_time=$(date +%s)
 batch_start_time=$(date +%s)
 total_time=0
 
-amount_of_timesteps=300
-n_arms=40
+amount_of_timesteps=100
+n_arms=4
 m_top=2
-experiment_name="${n_arms}arms_${amount_of_timesteps}t_${m_top}m_shuffled_NoZeroMean_bernoulli"
+experiment_name="${n_arms}arms_${amount_of_timesteps}t_${m_top}m_shuffled_WithEpsilon_bernoulli"
 
 dir="results"
 full_dir="${dir}/${experiment_name}"
