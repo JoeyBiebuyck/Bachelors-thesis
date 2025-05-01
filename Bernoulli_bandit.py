@@ -2,12 +2,13 @@ import requests
 import random
 from bfts.bandit import Bandit
 import numpy as np
+import sys
 # from environments.gaussian_jun import linear_means
 
-def linear_means_no_shuffle(n): # this is identical to the linear_means function, except for that it does not shuffle the means (for easy verification of correct arm identification)
+def linear_means_no_shuffle(n):
     # mean_fn = lambda i: .9 * (n - i) / (n - 1)
     # means = list(map(mean_fn, range(n)))
-    means = np.linspace(0, 1, n)
+    means = np.linspace(sys.float_info.min, 1, n)
     means = list(means)
     random.Random(1).shuffle(means)
     return means
