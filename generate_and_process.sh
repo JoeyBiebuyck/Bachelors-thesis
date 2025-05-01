@@ -2,10 +2,11 @@
 
 start_time=$(date +%s)
 batch_start_time=$(date +%s)
+total_time = 0
 
-amount_of_timesteps=300
-n_arms=20
-m_top=2
+amount_of_timesteps=100
+n_arms=20 # dont forget to change this value in all the files!
+m_top=3
 experiment_name="${n_arms}arms_${amount_of_timesteps}t_${m_top}m_NoZeroMean"
 
 dir="results"
@@ -39,7 +40,7 @@ format_time() {
 print_elapsed() {
     local current=$(date +%s)
     local elapsed=$((current - start_time))
-    echo -e "${YELLOW}Elapsed time: $(format_time $elapsed)${NC}"
+    echo -e "${YELLOW}Elapsed time: $(format_time $elapsed)/${total_time}${NC}"
 }
 
 print_batch_time() {
@@ -64,7 +65,8 @@ if [ $r -eq 1 ]; then
     current=$(date +%s)
     batch_time=$((current - start_time))
     if [ $batch_time -gt 0 ]; then
-        echo -e "${YELLOW}Estimated time for entire process: $(format_time $((batch_time * 100)))${NC}"
+        total_time=$(format_time $((batch_time * 100)))
+        echo -e "${YELLOW}Estimated time for entire process: ${total_time} ${NC}"
     else
         echo -e "${YELLOW}Estimated time for entire process: $(format_time 1)${NC}"
     fi
