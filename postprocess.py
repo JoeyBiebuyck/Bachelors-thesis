@@ -15,9 +15,10 @@ parser.add_argument("-m", "--m", dest="m", type=int, required=True)
 args = parser.parse_args()
 
 n_techniques = args.arms
-website_1 = 0.25
-website_2 = 0.50
-website_3 = 0.75
+# match these values with those in the views.py files
+website_1 = 0.00
+website_2 = 1/3
+website_3 = 2/3
 technique_to_mean = {} # first map each technique identifier to its expected mean, this is calculated based on how many filters it is able to bypass
 
 # the order of the means seems reversed, but that is because we need to find the techniques which have the lowest means
