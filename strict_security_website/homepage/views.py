@@ -4,7 +4,7 @@ from django.template import loader
 import random
 #from run_atlucb_xss import n_arms
 
-n_arms = 12
+n_arms = 13
 disarm_rate = 0.75
 
 def homepage(request):

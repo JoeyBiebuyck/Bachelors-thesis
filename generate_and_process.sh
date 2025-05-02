@@ -4,8 +4,8 @@ start_time=$(date +%s)
 batch_start_time=$(date +%s)
 total_time = 0
 
-amount_of_timesteps=300
-n_arms=12 # dont forget to change this value in all the files!
+amount_of_timesteps=150
+n_arms=13 # dont forget to change this value in all the files!
 m_top=2
 experiment_name="${n_arms}arms_${amount_of_timesteps}t_${m_top}m_PlusEpsilon_new"
 
