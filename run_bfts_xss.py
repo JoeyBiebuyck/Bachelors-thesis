@@ -10,7 +10,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import math
 
-plot = False # turn this on if you want to plot the posteriors
+plot = True # turn this on if you want to plot the posteriors
 
 parser = ArgumentParser(description="XSS BFTS")
 
@@ -70,7 +70,7 @@ if plot:
     real_means = list(map(lambda x: technique_to_mean[x], identifiers)) # retrieve the means from the dictionary
 
     rewards_per_arm = algo.rewards_per_arm
-    n_arms = len(rewards_per_arm)
+    n_arms = args.arms
     n_cols = 3
     n_rows = math.ceil(n_arms/3)
 
@@ -90,4 +90,4 @@ if plot:
         ax.set_yticks([0, 1/3 * len(rewards), 2/3 * len(rewards), len(rewards)])
 
     plt.tight_layout(h_pad=4)
-    plt.show()
+    plt.savefig('result_plots/posteriors/bfts/' + f"{n_arms}n_" + f"{args.m}m_" + f"{args.time}t_bfts" + '.png', dpi=300)

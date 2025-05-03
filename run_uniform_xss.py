@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 #from global_variables import n_arms
 
 #n_arms = 10 # MUST MANUALLY UPDATE EACH views.py FILE
-plot = False
+plot = True
 
 parser = ArgumentParser(description="XSS ATLUCB")
 
@@ -84,4 +84,4 @@ if plot:
         ax.set_yticks([0, 1/3 * len(rewards), 2/3 * len(rewards), len(rewards)])
 
     plt.tight_layout(h_pad=4)
-    plt.show()
+    plt.savefig('result_plots/posteriors/uniform/' + f"{n_arms}n_" + f"{args.m}m_" + f"{args.time}t_uniform" + '.png', dpi=300)
