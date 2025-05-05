@@ -20,6 +20,7 @@ website_1 = 0.25
 website_2 = 0.50
 website_3 = 0.75
 technique_to_mean = {} # first map each technique identifier to its expected mean, this is calculated based on how many filters it is able to bypass
+best_techniques = 0
 
 # the order of the means seems reversed, but that is because we need to find the techniques which have the lowest means
 for technique in range(1, n_techniques+1):
@@ -30,6 +31,7 @@ for technique in range(1, n_techniques+1):
     elif technique in range(int(n_techniques*website_2)+1, int(n_techniques*website_3)+1):
         technique_to_mean[technique] = 1/3
     else:
+        best_techniques += 1
         technique_to_mean[technique] = 0
 
 bandit = XSS_bandit(n_techniques)
@@ -38,7 +40,8 @@ identifiers = list(map(lambda x: x("test"), techniques)) # map the techiques on 
 real_means = list(map(lambda x: technique_to_mean[x], identifiers)) # retrieve the means from the dictionary
 
 real_means = np.array(real_means)
-real_m_top = np.argsort(-real_means)[:args.m]
+# real_m_top = np.argsort(-real_means)[:args.m]
+real_m_top = np.argsort(-real_means)[:best_techniques]
 
 #print the output header
 print("t," + args.stat, flush=True)

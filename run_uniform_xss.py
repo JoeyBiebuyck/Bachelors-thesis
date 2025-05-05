@@ -84,4 +84,4 @@ if plot:
         ax.set_yticks([0, 1/3 * len(rewards), 2/3 * len(rewards), len(rewards)])
 
     plt.tight_layout(h_pad=4)
-    plt.savefig('result_plots/posteriors/uniform/' + f"{n_arms}n_" + f"{args.m}m_" + f"{args.time}t_uniform" + '.png', dpi=300)
+    plt.savefig('result_plots/posteriors/uniform/' + f"{n_arms}n_{args.m}m_{args.time}t_bfts_{args.seed}" + '.png', dpi=300)
