@@ -15,23 +15,42 @@ parser.add_argument("-m", "--m", dest="m", type=int, required=True)
 args = parser.parse_args()
 
 n_techniques = args.arms
+n_websites = 9
 # match these values with those in the views.py files
-website_1 = 0.25
-website_2 = 0.50
-website_3 = 0.75
+website_1 = 0.1
+website_2 = 0.2
+website_3 = 0.3
+website_4 = 0.4
+website_5 = 0.5
+website_6 = 0.6
+website_7 = 0.7
+website_8 = 0.8
+website_9 = 0.9
 technique_to_mean = {} # first map each technique identifier to its expected mean, this is calculated based on how many filters it is able to bypass
-best_techniques = 0
+# best_techniques = 0
 
 # the order of the means seems reversed, but that is because we need to find the techniques which have the lowest means
 for technique in range(1, n_techniques+1):
     if technique in range(1, int(n_techniques*website_1)+1):
         technique_to_mean[technique] = 1
     elif technique in range(int(n_techniques*website_1)+1, int(n_techniques*website_2)+1):
-        technique_to_mean[technique] = 2/3
+        technique_to_mean[technique] = 8/n_websites
     elif technique in range(int(n_techniques*website_2)+1, int(n_techniques*website_3)+1):
-        technique_to_mean[technique] = 1/3
+        technique_to_mean[technique] = 7/n_websites
+    elif technique in range(int(n_techniques*website_3)+1, int(n_techniques*website_4)+1):
+        technique_to_mean[technique] = 6/n_websites
+    elif technique in range(int(n_techniques*website_4)+1, int(n_techniques*website_5)+1):
+        technique_to_mean[technique] = 5/n_websites
+    elif technique in range(int(n_techniques*website_5)+1, int(n_techniques*website_6)+1):
+        technique_to_mean[technique] = 4/n_websites
+    elif technique in range(int(n_techniques*website_6)+1, int(n_techniques*website_7)+1):
+        technique_to_mean[technique] = 3//n_websites
+    elif technique in range(int(n_techniques*website_7)+1, int(n_techniques*website_8)+1):
+        technique_to_mean[technique] = 2/n_websites
+    elif technique in range(int(n_techniques*website_8)+1, int(n_techniques*website_9)+1):
+        technique_to_mean[technique] = 1/n_websites
     else:
-        best_techniques += 1
+        # best_techniques += 1
         technique_to_mean[technique] = 0
 
 bandit = XSS_bandit(n_techniques)
@@ -40,8 +59,8 @@ identifiers = list(map(lambda x: x("test"), techniques)) # map the techiques on 
 real_means = list(map(lambda x: technique_to_mean[x], identifiers)) # retrieve the means from the dictionary
 
 real_means = np.array(real_means)
-# real_m_top = np.argsort(-real_means)[:args.m]
-real_m_top = np.argsort(-real_means)[:best_techniques]
+real_m_top = np.argsort(-real_means)[:args.m]
+# real_m_top = np.argsort(-real_means)[:best_techniques]
 
 #print the output header
 print("t," + args.stat, flush=True)

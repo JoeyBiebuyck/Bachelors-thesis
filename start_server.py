@@ -19,7 +19,7 @@ def start_server():
     server7 = threading.Thread(target=send_command, daemon=True, args=("python websites/website_7/manage.py runserver 127.0.0.1:8006",))
     server8 = threading.Thread(target=send_command, daemon=True, args=("python websites/website_8/manage.py runserver 127.0.0.1:8007",))
     server9 = threading.Thread(target=send_command, daemon=True, args=("python websites/website_9/manage.py runserver 127.0.0.1:8008",))
-    server10 = threading.Thread(target=send_command, daemon=True, args=("python websites/website_10/manage.py runserver 127.0.0.1:8009",))
+    # server10 = threading.Thread(target=send_command, daemon=True, args=("python websites/website_10/manage.py runserver 127.0.0.1:8009",))
     
     server1.start()
     server2.start()
@@ -30,7 +30,7 @@ def start_server():
     server7.start()
     server8.start()
     server9.start()
-    server10.start()
+    # server10.start()
 
     # otherwise the servers would immediately close since the main thread has stopped (this is the main thread)
     while True:
