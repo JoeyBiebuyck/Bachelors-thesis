@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 #from global_variables import n_arms
 
 #n_arms = 10 # MUST MANUALLY UPDATE EACH views.py FILE
-plot = True
+plot = False # turn this on if you want to plot the posteriors per arm
 
 parser = ArgumentParser(description="XSS ATLUCB")
 

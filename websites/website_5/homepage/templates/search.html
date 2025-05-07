@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search page</title>
+</head>
+<body>
+
+ <!-- autoecape must be disabled, otherwise XSS is not possible -->
+{% autoescape off %}
+<p>You searched for: {{ query }} on the website with strict security</p>
+{% endautoescape %}
+
+</body>
+</html>

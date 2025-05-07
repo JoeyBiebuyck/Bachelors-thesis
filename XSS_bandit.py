@@ -25,10 +25,13 @@ def XSS_bandit(n_arms: int):
 session = requests.Session()
     
 def send_and_get_result(payload_):
-    website_to_ip_dict = {"weak_security_website": "http://127.0.0.1:8000", "medium_security_website": "http://127.0.0.1:8001", "strict_security_website": "http://127.0.0.1:8002"}
+    website_to_ip_dict = {"website_1": "http://127.0.0.1:8000", "website_2": "http://127.0.0.1:8001", "website_3": "http://127.0.0.1:8002", 
+                          "website_4": "http://127.0.0.1:8003", "website_5": "http://127.0.0.1:8004", "website_6": "http://127.0.0.1:8005", 
+                          "website_7": "http://127.0.0.1:8006", "website_8": "http://127.0.0.1:8007", "website_9": "http://127.0.0.1:8008", 
+                          "website_10": "http://127.0.0.1:8009"}
 
     # 1st choose which server to send it to (which security filter it will get passed through)
-    websites = ["weak_security_website", "medium_security_website", "strict_security_website"]
+    websites = ["website_1", "website_2", "website_3", "website_4", "website_5", "website_6", "website_7", "website_8", "website_9", "website_10"]
     website = random.choice(websites)
     ip = website_to_ip_dict[website]
 

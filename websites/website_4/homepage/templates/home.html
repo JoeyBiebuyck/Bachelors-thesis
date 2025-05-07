@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+</head>
+<body>
+<h1>This is the homepage representing the website with strict security</h1>
+<form action="{% url 'search' %}" method="GET">  <!-- this is what makes the things that comes in the url bar-->
+    <input type="text" name="q" placeholder="Search..." required>
+    <button type="submit">Search</button>
+</form>
+</body>
+</html>

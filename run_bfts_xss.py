@@ -10,7 +10,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import math
 
-plot = True # turn this on if you want to plot the posteriors
+plot = False # turn this on if you want to plot the posteriors per arm
 
 parser = ArgumentParser(description="XSS BFTS")
 
