@@ -13,8 +13,8 @@ class BFTS:
         self.mean_per_arm = np.full(len(bandit.arms), float(0))
 
     def add_reward(self, arm_i, reward):
-        self.rewards_per_arm[arm_i].append(reward)
-        mean = self.posteriors[arm_i].mean(self.rewards_per_arm[arm_i])
+        self.rewards_per_arm[arm_i].append(reward) # add reward
+        mean = self.posteriors[arm_i].mean(self.rewards_per_arm[arm_i]) # recalculate mean
         self.mean_per_arm[arm_i] = mean
 
     def top_m(self):

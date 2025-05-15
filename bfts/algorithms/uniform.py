@@ -9,8 +9,8 @@ class Uniform:
         self.mean_per_arm = np.full(len(bandit.arms), float(0))
 
     def add_reward(self, arm_i, reward):
-        self.rewards_per_arm[arm_i].append(reward)
-        self.mean_per_arm[arm_i] = np.mean(self.rewards_per_arm[arm_i])
+        self.rewards_per_arm[arm_i].append(reward) # add reward
+        self.mean_per_arm[arm_i] = np.mean(self.rewards_per_arm[arm_i]) # recalculate mean
 
     def least_sampled_indices(self):
         count_per_arm = list(map(len, self.rewards_per_arm))

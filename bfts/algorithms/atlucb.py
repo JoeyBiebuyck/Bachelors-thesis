@@ -78,8 +78,8 @@ class AT_LUCB:
         return np.argsort(-self.mean_per_arm)[0:self.m]
 
     def add_reward(self, arm_i, reward):
-        self.reward_per_arm[arm_i].append(reward)
-        self.mean_per_arm[arm_i] = np.mean(self.reward_per_arm[arm_i])
+        self.reward_per_arm[arm_i].append(reward) # add reward
+        self.mean_per_arm[arm_i] = np.mean(self.reward_per_arm[arm_i]) # recalculate mean
 
     def step(self, t): # do this at each timestep t
         if self.term(t, self.sigma(self.S[t - 1]), self.epsilon): # if the terminating condition is met
