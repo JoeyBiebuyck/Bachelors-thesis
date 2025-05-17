@@ -94,12 +94,10 @@ class AT_LUCB:
 
         lowest_index = self.l(t, self.sigma(self.S[t - 1]))
         low_reward = self.bandit.play(lowest_index)
-        self.has_arm_been_played[lowest_index] += 1
         self.add_reward(lowest_index, low_reward)
 
         highest_index = self.h(t, self.sigma(self.S[t - 1]))
         high_reward = self.bandit.play(highest_index)
-        self.has_arm_been_played[highest_index] += 1
         self.add_reward(highest_index, high_reward)
 
         return self.Jt # doesnt immediately recalculate top-m
