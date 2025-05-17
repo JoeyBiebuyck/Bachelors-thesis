@@ -63,7 +63,10 @@ real_m_top = np.argsort(-real_means)[:args.m]
 # real_m_top = np.argsort(-real_means)[:best_techniques]
 
 #print the output header
-
+if args.stat == "prop_and_sum":
+    print("t," + "prop," + "sum", flush=True)
+else:
+    print("t," + args.stat, flush=True)
 
 with open(args.csv_fn) as csv_file:
     read_csv = csv.reader(csv_file, delimiter=',')
@@ -74,20 +77,16 @@ with open(args.csv_fn) as csv_file:
         m_top = list(map(int, row[1:1+args.m]))
 
         if args.stat == "min":
-            print("t," + args.stat, flush=True)
             min_ = np.min(real_means[m_top])
             print(str(time) + "," + str(min_))
         elif args.stat == "sum":
-            print("t," + args.stat, flush=True)
             sum_ = np.sum(real_means[m_top])
             print(str(time) + "," + str(sum_))
         elif args.stat == "prop_of_success":
-            print("t," + args.stat, flush=True)
             i = set(real_m_top).intersection(set(m_top))
             prop = len(i) / args.m
             print(str(time) + "," + str(prop))
         elif args.stat == "prop_and_sum": # new statistic for both proportion of success and sum of m-top means
-            print("t," + "prop," + "sum", flush=True)
             i = set(real_m_top).intersection(set(m_top))
             prop = len(i) / args.m
             sum_ = np.sum(real_means[m_top])

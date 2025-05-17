@@ -1,14 +1,16 @@
 #!/bin/bash
 
+date_time=$(date +"%Y-%m-%d_%Hh%Mm%Ss")
 start_time=$(date +%s)
 batch_start_time=$(date +%s)
 total_time=0
 
+#statistic=prop_of_success
 statistic="prop_and_sum"
 amount_of_timesteps=250
 n_arms=10 # dont forget to change this value in all the files!
 m_top=2
-experiment_name="${n_arms}arms_${amount_of_timesteps}t_${m_top}m_10websites_07-05-2025"
+experiment_name="${n_arms}arms_${amount_of_timesteps}t_${m_top}m_10websites_$date_time"
 
 dir="results"
 full_dir="${dir}/${experiment_name}"
