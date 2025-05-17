@@ -4,6 +4,7 @@ start_time=$(date +%s)
 batch_start_time=$(date +%s)
 total_time=0
 
+statistic="prop_and_sum"
 amount_of_timesteps=250
 n_arms=10 # dont forget to change this value in all the files!
 m_top=2
@@ -55,11 +56,11 @@ echo -e "${GREEN}Script started at $(date)${NC}"
 for r in {1..100}
 do
 python run_bfts_xss.py -s $r -t $amount_of_timesteps -n $n_arms -m $m_top > ${full_dir}/bfts.$r.csv
-python postprocess.py -m $m_top -c ${full_dir}/bfts.$r.csv -n $n_arms -s prop_of_success > "${full_dir}/bfts-$r.prop_of_success"
+python postprocess.py -m $m_top -c ${full_dir}/bfts.$r.csv -n $n_arms -s $statistic > "${full_dir}/bfts-$r.$statistic"
 python run_atlucb_xss.py -s $r -t $amount_of_timesteps -n $n_arms -m $m_top > ${full_dir}/atlucb.$r.csv
-python postprocess.py -m $m_top -c ${full_dir}/atlucb.$r.csv -n $n_arms -s prop_of_success > "${full_dir}/atlucb-$r.prop_of_success"
+python postprocess.py -m $m_top -c ${full_dir}/atlucb.$r.csv -n $n_arms -s $statistic > "${full_dir}/atlucb-$r.$statistic"
 python run_uniform_xss.py -s $r -t $amount_of_timesteps -n $n_arms -m $m_top > ${full_dir}/uniform.$r.csv
-python postprocess.py -m $m_top -c ${full_dir}/uniform.$r.csv -n $n_arms -s prop_of_success > "${full_dir}/uniform-$r.prop_of_success"
+python postprocess.py -m $m_top -c ${full_dir}/uniform.$r.csv -n $n_arms -s $statistic > "${full_dir}/uniform-$r.$statistic"
 
 if [ $r -eq 1 ]; then
     current=$(date +%s)
@@ -84,4 +85,4 @@ total_elapsed=$((end_time - start_time))
 
 echo -e "${RED}Generating completed in $(format_time $total_elapsed)${NC}"
 
-python merge_and_plot.py -d $full_dir -n $n_arms -m $m_top -t $amount_of_timesteps
+python merge_and_plot.py -d $full_dir -n $n_arms -m $m_top -t $amount_of_timesteps -s $statistic

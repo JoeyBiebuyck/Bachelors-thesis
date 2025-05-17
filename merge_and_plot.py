@@ -11,43 +11,73 @@ parser.add_argument("-d", "--dir", dest="dir", type=str, required=True) # direct
 parser.add_argument("-t", "--time", dest="time", type=int, required=True)
 parser.add_argument("-n", "--n_arms", dest="arms", type=int, required=True)
 parser.add_argument("-m", "--m", dest="m",type=int, required=True)
+parser.add_argument("-s", "--stat", dest="stat", type=str, required=True)
 
 args = parser.parse_args()
 
 dir = args.dir
+stat = args.stat
 
 # merge the experiments
 
-merged_bfts_df = pd.read_csv(dir + "/bfts-1.prop_of_success")
-merged_bfts_df.rename(columns={"prop_of_success": "prop_of_success_1"})
+if stat == "prop_and_sum": # this statistic has an extra column, so must be merged differently
+    merged_bfts_df = pd.read_csv(dir + "/bfts-1." + stat)
+    merged_bfts_df.rename(columns={"prop": "prop_1", "sum": "sum_1"})
 
-for i in range(2, 101):
-    old_df = merged_bfts_df
-    new_filename = dir + "/bfts-" + str(i) + ".prop_of_success"
-    new_df = pd.read_csv(new_filename)
-    merged_bfts_df = pd.merge(old_df, new_df, on="t", suffixes=("", f"_{i}"))
+    for i in range(2, 101):
+        old_df = merged_bfts_df
+        new_filename = dir + "/bfts-" + str(i) + "." + stat
+        new_df = pd.read_csv(new_filename)
+        merged_bfts_df = pd.merge(old_df, new_df, on="t", suffixes=("", f"_{i}"))
 
-merged_atlucb_df = pd.read_csv(dir + "/atlucb-1.prop_of_success")
-merged_atlucb_df.rename(columns={"prop_of_success": "prop_of_success_1"})
+    merged_atlucb_df = pd.read_csv(dir + "/atlucb-1." + stat)
+    merged_atlucb_df.rename(columns={"prop": "prop_1", "sum": "sum_1"})
 
-for i in range(2, 101):
-    old_df = merged_atlucb_df
-    new_filename = dir + "/atlucb-" + str(i) + ".prop_of_success"
-    new_df = pd.read_csv(new_filename)
-    merged_atlucb_df = pd.merge(old_df, new_df, on="t", suffixes=("", f"_{i}"))
+    for i in range(2, 101):
+        old_df = merged_atlucb_df
+        new_filename = dir + "/atlucb-" + str(i) + "." + stat
+        new_df = pd.read_csv(new_filename)
+        merged_atlucb_df = pd.merge(old_df, new_df, on="t", suffixes=("", f"_{i}"))
 
-merged_uniform_df = pd.read_csv(dir + "/uniform-1.prop_of_success")
-merged_uniform_df.rename(columns={"prop_of_success": "prop_of_success_1"})
+    merged_uniform_df = pd.read_csv(dir + "/uniform-1." + stat)
+    merged_uniform_df.rename(columns={"prop": "prop_1", "sum": "sum_1"})
 
-for i in range(2, 101):
-    old_df = merged_uniform_df
-    new_filename = dir + "/uniform-" + str(i) + ".prop_of_success"
-    new_df = pd.read_csv(new_filename)
-    merged_uniform_df = pd.merge(old_df, new_df, on="t", suffixes=("", f"_{i}"))
+    for i in range(2, 101):
+        old_df = merged_uniform_df
+        new_filename = dir + "/uniform-" + str(i) + "." + stat
+        new_df = pd.read_csv(new_filename)
+        merged_uniform_df = pd.merge(old_df, new_df, on="t", suffixes=("", f"_{i}"))
+else:
+    merged_bfts_df = pd.read_csv(dir + "/bfts-1." + stat)
+    merged_bfts_df.rename(columns={stat: stat + "_1"})
 
-merged_bfts_df.to_csv(dir + "/results/merged_bfts_success_prop.csv", index=False)
-merged_atlucb_df.to_csv(dir + "/results/merged_atlucb_success_prop.csv", index=False)
-merged_uniform_df.to_csv(dir + "/results/merged_uniform_success_prop.csv", index=False)
+    for i in range(2, 101):
+        old_df = merged_bfts_df
+        new_filename = dir + "/bfts-" + str(i) + "." + stat
+        new_df = pd.read_csv(new_filename)
+        merged_bfts_df = pd.merge(old_df, new_df, on="t", suffixes=("", f"_{i}"))
+
+    merged_atlucb_df = pd.read_csv(dir + "/atlucb-1." + stat)
+    merged_atlucb_df.rename(columns={stat: stat + "_1"})
+
+    for i in range(2, 101):
+        old_df = merged_atlucb_df
+        new_filename = dir + "/atlucb-" + str(i) + "." + stat
+        new_df = pd.read_csv(new_filename)
+        merged_atlucb_df = pd.merge(old_df, new_df, on="t", suffixes=("", f"_{i}"))
+
+    merged_uniform_df = pd.read_csv(dir + "/uniform-1." + stat)
+    merged_uniform_df.rename(columns={stat: stat + "_1"})
+
+    for i in range(2, 101):
+        old_df = merged_uniform_df
+        new_filename = dir + "/uniform-" + str(i) + "." + stat
+        new_df = pd.read_csv(new_filename)
+        merged_uniform_df = pd.merge(old_df, new_df, on="t", suffixes=("", f"_{i}"))
+
+merged_bfts_df.to_csv(dir + "/results/merged_bfts_" + stat + ".csv", index=False)
+merged_atlucb_df.to_csv(dir + "/results/merged_atlucb_" + stat + ".csv", index=False)
+merged_uniform_df.to_csv(dir + "/results/merged_uniform_" + stat + ".csv", index=False)
 
 # plot the experiments
 
@@ -79,9 +109,9 @@ def make_csv_plotable(file_path, method_name):
 
 results_dir = dir + "/results"
 
-uniform_df = make_csv_plotable(results_dir + "/merged_uniform_success_prop.csv", "Uniform")
-atlucb_df = make_csv_plotable(results_dir + "/merged_atlucb_success_prop.csv", "AT-LUCB")
-bfts_df = make_csv_plotable(results_dir + "/merged_bfts_success_prop.csv", "BFTS")
+uniform_df = make_csv_plotable(results_dir + "/merged_uniform_" + stat + ".csv", "Uniform")
+atlucb_df = make_csv_plotable(results_dir + "/merged_atlucb_" + stat + ".csv", "AT-LUCB")
+bfts_df = make_csv_plotable(results_dir + "/merged_bfts_" + stat + ".csv", "BFTS")
 
 combined_df = pd.concat([uniform_df, atlucb_df, bfts_df], ignore_index=True)
 
