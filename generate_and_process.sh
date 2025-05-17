@@ -6,7 +6,7 @@ batch_start_time=$(date +%s)
 total_time=0
 
 #statistic=prop_of_success
-statistic="prop_and_sum"
+statistic=prop_and_sum
 amount_of_timesteps=250
 n_arms=10 # dont forget to change this value in all the files!
 m_top=2

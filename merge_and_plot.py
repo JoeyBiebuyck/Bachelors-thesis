@@ -82,30 +82,51 @@ else:
     merged_atlucb_df.to_csv(dir + "/results/merged_atlucb_" + stat + ".csv", index=False)
     merged_uniform_df.to_csv(dir + "/results/merged_uniform_" + stat + ".csv", index=False)
 
-# plot the experiments
-plt.style.use('default')
-sns.set_style("whitegrid", {'axes.grid': False})
-
-plt.figure(figsize=(10, 7))
-
 def make_csv_plotable(file_path, method_name):
-    df = pd.read_csv(file_path)
-    # extract timesteps from csv
-    timesteps = df.iloc[:, 0].values
-    # extract statistic values from csv
-    y_values = df.iloc[:, 1:].values
-    # calculate the mean value for every timestep
-    mean_values = np.mean(y_values, axis=1)
-    # calculate standard deviation (for confidence intervals) for every timestep
-    std_values = np.std(y_values, axis=1)
+    if stat == "prop_and_sum":
+        df = pd.read_csv(file_path)
+        # extract timesteps from csv
+        timesteps = df.iloc[:, 0].values
+        # extract statistic values from csv
+        y_values = df.iloc[:, range(1, df.shape[1], 2)].values
+        # calculate the mean value for every timestep
+        mean_values = np.mean(y_values, axis=1)
+        # calculate standard deviation (for confidence intervals) for every timestep
+        std_values = np.std(y_values, axis=1)
+        sum_y_values = df.iloc[:, range(2, df.shape[1], 2)].values
+        sum_mean_values = np.mean(sum_y_values, axis=1)
+        sum_std_values = np.std(sum_y_values, axis=1)
+        df_dict = {
+            'samples': timesteps,
+            'method': method_name,
+            'value': mean_values,
+            'lower': np.maximum(0, mean_values - std_values),  # to make sure there are no negative values
+            'upper': np.minimum(1, mean_values + std_values),   # to make sure there are no values greater than 1
+            'sum_mu': sum_mean_values,
+            'sum_mu_lower': np.maximum(0, sum_mean_values - sum_std_values),
+            'sum_mu_upper': np.minimum(1.9, sum_mean_values + sum_std_values),
+        }
+    else:
+        df = pd.read_csv(file_path)
+        # extract timesteps from csv
+        timesteps = df.iloc[:, 0].values
+        # extract statistic values from csv
+        y_values = df.iloc[:, 1:].values
+        # calculate the mean value for every timestep
+        mean_values = np.mean(y_values, axis=1)
+        # calculate standard deviation (for confidence intervals) for every timestep
+        std_values = np.std(y_values, axis=1)
 
-    plotable_df = pd.DataFrame({
-        'samples': timesteps,
-        'method': method_name,
-        'value': mean_values,
-        'lower': np.maximum(0, mean_values - std_values),  # to make sure there are no negative values
-        'upper': np.minimum(1, mean_values + std_values)   # to make sure there are no values greater than 1
-    })
+        df_dict = {
+            'samples': timesteps,
+            'method': method_name,
+            'value': mean_values,
+            'lower': np.maximum(0, mean_values - std_values),  # to make sure there are no negative values
+            'upper': np.minimum(1, mean_values + std_values),   # to make sure there are no values greater than 1
+        }
+
+
+    plotable_df = pd.DataFrame(df_dict)
 
     return plotable_df
 
@@ -116,42 +137,10 @@ atlucb_df = make_csv_plotable(results_dir + "/merged_atlucb_" + stat + ".csv", "
 bfts_df = make_csv_plotable(results_dir + "/merged_bfts_" + stat + ".csv", "BFTS")
 
 combined_df = pd.concat([uniform_df, atlucb_df, bfts_df], ignore_index=True)
+combined_df.to_csv(dir + "/results/merged_DF.csv", index=False)
 
-for method, color in zip(["Uniform", "AT-LUCB", "BFTS"], ["blue", "green", "red"]):
-    method_data = combined_df[combined_df['method'] == method]
-
-    plt.fill_between(
-        method_data['samples'], 
-        method_data['lower'], 
-        method_data['upper'],
-        color=color, 
-        alpha=0.3
-    )
-
-    sns.lineplot(
-        x='samples', 
-        y='value',
-        data=method_data,
-        color=color,
-        linewidth=2,
-        label=method
-    )
-
-# Set the axis labels with LaTeX formatting
-plt.xlabel(r'$\#$ of samples', fontsize=14) # $\times 10^4$
-plt.ylabel(r'$|J(t) \cap J^*|/m$', fontsize=14)
-
-# Configure the legend
-plt.legend(fontsize=12, frameon=True, facecolor='white', edgecolor='lightgray')
-
-# Set y-axis limits to match the example
-plt.ylim(0, 1)
-
-# Remove the top and right spines for a cleaner look
-sns.despine()
 
 # Add a tight layout
-plt.tight_layout(pad=1.5, rect=[0, 0, 1, 0.95])
 parent_dir, experiment_name = dir.split('/')
 arms, timesteps, top_m, extra = experiment_name.split('_', 3)
 
@@ -159,12 +148,79 @@ n = args.arms
 m = args.m
 t = args.time
 
-plt.title(f"n={n}, m={m}, t={t}")
+# plot the experiments
+plt.style.use('default')
+sns.set_style("whitegrid", {'axes.grid': False})
 
-plt.savefig(results_dir + '/' + experiment_name + '.png', dpi=300)
+# Create a figure with two subplots
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(20, 8))
 
-# save ook op een plek die in git zit
-plt.savefig('result_plots/' + experiment_name + '.png', dpi=300)
+# First subplot (left plot)
+for method, color in zip(["Uniform", "AT-LUCB", "BFTS"], ["blue", "green", "red"]):
+    method_data = combined_df[combined_df['method'] == method]
+    
+    ax1.fill_between(
+        method_data['samples'], 
+        method_data['lower'], 
+        method_data['upper'],
+        color=color, 
+        alpha=0.3
+    )
+    
+    sns.lineplot(
+        x='samples', 
+        y='value',
+        data=method_data,
+        color=color,
+        linewidth=2,
+        label=method,
+        ax=ax1
+    )
 
-# Show the plot
+# Set the axis labels for first subplot
+ax1.set_xlabel(r'$\#$ of samples', fontsize=14)
+ax1.set_ylabel(r'$|J(t) \cap J^*|/m$', fontsize=14)
+ax1.set_ylim(0, 1)
+ax1.legend(fontsize=12, frameon=True, facecolor='white', edgecolor='lightgray')
+sns.despine(ax=ax1)
+
+if stat == "prop_and_sum":
+    # Second subplot (right plot)
+    for method, color in zip(["Uniform", "AT-LUCB", "BFTS"], ["blue", "green", "red"]):
+        method_data = combined_df[combined_df['method'] == method]
+        
+        ax2.fill_between(
+            method_data['samples'], 
+            method_data['sum_mu_lower'],  # Adjust if needed
+            method_data['sum_mu_upper'],  # Adjust if needed
+            color=color, 
+            alpha=0.3
+        )
+        
+        sns.lineplot(
+            x='samples', 
+            y='sum_mu',  # Adjust if needed
+            data=method_data,
+            color=color,
+            linewidth=2,
+            label=method,
+            ax=ax2
+        )
+
+    # Set the axis labels for second subplot
+    ax2.set_xlabel(r'$\#$ of samples', fontsize=14)
+    ax2.set_ylabel(r'$\sum_{i\in I(t)}\mu_i$', fontsize=14)
+    ax2.set_ylim(0, 1.9)
+    ax2.legend(fontsize=12, frameon=True, facecolor='white', edgecolor='lightgray')
+    sns.despine(ax=ax2)
+
+# Add a common title if needed
+fig.suptitle(f"n={n}, m={m}, t={t}", fontsize=16)
+
+# Add a tight layout
+plt.tight_layout(pad=1.5, rect=[0, 0, 1, 0.95])
+
+# Save and show the figure
+plt.savefig(results_dir + '/' + experiment_name + '_combined.png', dpi=300)
+plt.savefig('result_plots/' + experiment_name + '_combined.png', dpi=300)
 plt.show()
