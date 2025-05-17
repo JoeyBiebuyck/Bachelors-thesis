@@ -83,14 +83,15 @@ else:
     merged_uniform_df.to_csv(dir + "/results/merged_uniform_" + stat + ".csv", index=False)
 
 def make_csv_plotable(file_path, method_name):
-    if stat == "prop_and_sum":
+
+    if stat == "prop_and_sum": # for this statistic there are 2 statistics in the files, so they must be extracted differently
         df = pd.read_csv(file_path)
         # extract timesteps from csv
         timesteps = df.iloc[:, 0].values
         # extract statistic values from csv
-        y_values = df.iloc[:, range(1, df.shape[1], 2)].values
+        y_values = df.iloc[:, range(1, df.shape[1], 2)].values # the columns are alternating, so only every other column is the same statistic
         # calculate the mean value for every timestep
-        mean_values = np.mean(y_values, axis=1)
+        mean_values = np.mean(y_values, axis=1) # idem
         # calculate standard deviation (for confidence intervals) for every timestep
         std_values = np.std(y_values, axis=1)
         sum_y_values = df.iloc[:, range(2, df.shape[1], 2)].values
@@ -106,7 +107,7 @@ def make_csv_plotable(file_path, method_name):
             'sum_mu_lower': np.maximum(0, sum_mean_values - sum_std_values),
             'sum_mu_upper': np.minimum(1.9, sum_mean_values + sum_std_values),
         }
-    else:
+    else: # if there is only 1 statistic in the files
         df = pd.read_csv(file_path)
         # extract timesteps from csv
         timesteps = df.iloc[:, 0].values
@@ -152,10 +153,10 @@ t = args.time
 plt.style.use('default')
 sns.set_style("whitegrid", {'axes.grid': False})
 
-# Create a figure with two subplots
+# make 2 subplots
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(20, 8))
 
-# First subplot (left plot)
+# plot the first plot (left), this is the proportion of correctly identified arms (this plot could be any statistic, the labels would just be wrong then)
 for method, color in zip(["Uniform", "AT-LUCB", "BFTS"], ["blue", "green", "red"]):
     method_data = combined_df[combined_df['method'] == method]
     
@@ -177,7 +178,7 @@ for method, color in zip(["Uniform", "AT-LUCB", "BFTS"], ["blue", "green", "red"
         ax=ax1
     )
 
-# Set the axis labels for first subplot
+# set the labels
 ax1.set_xlabel(r'$\#$ of samples', fontsize=14)
 ax1.set_ylabel(r'$|J(t) \cap J^*|/m$', fontsize=14)
 ax1.set_ylim(0, 1)
@@ -185,21 +186,21 @@ ax1.legend(fontsize=12, frameon=True, facecolor='white', edgecolor='lightgray')
 sns.despine(ax=ax1)
 
 if stat == "prop_and_sum":
-    # Second subplot (right plot)
+    # plot the second plot (sum of the means) (this only works for the prop_and_sum statistic)
     for method, color in zip(["Uniform", "AT-LUCB", "BFTS"], ["blue", "green", "red"]):
         method_data = combined_df[combined_df['method'] == method]
         
         ax2.fill_between(
             method_data['samples'], 
-            method_data['sum_mu_lower'],  # Adjust if needed
-            method_data['sum_mu_upper'],  # Adjust if needed
+            method_data['sum_mu_lower'],
+            method_data['sum_mu_upper'],
             color=color, 
             alpha=0.3
         )
         
         sns.lineplot(
             x='samples', 
-            y='sum_mu',  # Adjust if needed
+            y='sum_mu',
             data=method_data,
             color=color,
             linewidth=2,
@@ -207,20 +208,20 @@ if stat == "prop_and_sum":
             ax=ax2
         )
 
-    # Set the axis labels for second subplot
+    # set the labels
     ax2.set_xlabel(r'$\#$ of samples', fontsize=14)
     ax2.set_ylabel(r'$\sum_{i\in I(t)}\mu_i$', fontsize=14)
     ax2.set_ylim(0, 1.9)
     ax2.legend(fontsize=12, frameon=True, facecolor='white', edgecolor='lightgray')
     sns.despine(ax=ax2)
 
-# Add a common title if needed
+# set a title
 fig.suptitle(f"n={n}, m={m}, t={t}", fontsize=16)
 
-# Add a tight layout
+# set tight layout
 plt.tight_layout(pad=1.5, rect=[0, 0, 1, 0.95])
 
-# Save and show the figure
+# save and plot the figure
 plt.savefig(results_dir + '/' + experiment_name + '_combined.png', dpi=300)
 plt.savefig('result_plots/' + experiment_name + '_combined.png', dpi=300)
 plt.show()
