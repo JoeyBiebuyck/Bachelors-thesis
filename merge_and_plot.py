@@ -220,5 +220,5 @@ plt.tight_layout(pad=1.5, rect=[0, 0, 1, 0.95])
 
 # save and plot the figure
 plt.savefig(results_dir + '/' + experiment_name + '_combined.png', dpi=300)
-plt.savefig('result_plots/' + experiment_name + '_combined.png', dpi=300)
+plt.savefig('experiment_plots/' + experiment_name + '_combined.png', dpi=300)
 plt.show()
