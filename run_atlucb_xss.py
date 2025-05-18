@@ -2,7 +2,7 @@ import numpy as np
 from argparse import ArgumentParser
 import threading
 
-from XSS_bandit import XSS_bandit
+from bandits.XSS_bandit import XSS_bandit
 from start_server import start_server
 
 from bfts.algorithms.atlucb import AT_LUCB

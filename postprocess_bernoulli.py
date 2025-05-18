@@ -2,7 +2,7 @@ from argparse import ArgumentParser
 import csv
 import numpy as np
 import os
-from Bernoulli_bandit import linear_means_no_shuffle
+from bandits.Bernoulli_bandit import linear_means_no_shuffle
 #from global_variables import n_arms
 
 parser = ArgumentParser(description="postprocess")

@@ -1,7 +1,7 @@
 import numpy as np
 from argparse import ArgumentParser
 
-from Bernoulli_bandit import Bernoulli_bandit
+from bandits.Bernoulli_bandit import Bernoulli_bandit
 from bfts.algorithms.uniform import Uniform 
 from bfts.run_utils import print_header,run
 

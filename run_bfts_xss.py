@@ -1,7 +1,7 @@
 import numpy as np
 from argparse import ArgumentParser
 
-from XSS_bandit import XSS_bandit, XSS_transformations
+from bandits.XSS_bandit import XSS_bandit, XSS_transformations
 
 from bfts.algorithms.bfts import BFTS 
 from bfts.algorithms.posteriors.beta import BetaPosterior
