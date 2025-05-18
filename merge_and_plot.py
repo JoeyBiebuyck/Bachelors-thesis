@@ -143,8 +143,6 @@ bfts_df = make_csv_plotable(results_dir + "/merged_bfts_" + stat + ".csv", "BFTS
 combined_df = pd.concat([uniform_df, atlucb_df, bfts_df], ignore_index=True)
 combined_df.to_csv(dir + "/results/merged_DF.csv", index=False)
 
-
-# Add a tight layout
 parent_dir, experiment_name = dir.split('/')
 arms, timesteps, top_m, extra = experiment_name.split('_', 3)
 
