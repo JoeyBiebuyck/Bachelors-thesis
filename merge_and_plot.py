@@ -159,9 +159,9 @@ for method, color in zip(["Uniform", "AT-LUCB", "BFTS"], ["blue", "green", "red"
     
     # adjust for AT-LUCB taking 2 samples per time step
     if method == "AT-LUCB":
-        method_data['actual_samples'] = method_data['samples'] * 2
+        method_data = method_data.assign(actual_samples=method_data['samples'] * 2)
     else:
-        method_data['actual_samples'] = method_data['samples']
+        method_data = method_data.assign(actual_samples=method_data['samples'])
 
     ax1.fill_between(
         method_data['actual_samples'], 
@@ -185,6 +185,7 @@ for method, color in zip(["Uniform", "AT-LUCB", "BFTS"], ["blue", "green", "red"
 ax1.set_xlabel(r'$\#$ of samples', fontsize=14)
 ax1.set_ylabel(r'$|J(t) \cap J^*|/m$', fontsize=14)
 ax1.set_ylim(0, 1)
+ax1.set_xlim(0, t)
 ax1.legend(fontsize=12, frameon=True, facecolor='white', edgecolor='lightgray', loc='lower right')
 sns.despine(ax=ax1)
 
@@ -195,9 +196,9 @@ if stat == "prop_and_sum":
 
         # adjust for AT-LUCB taking 2 samples per time step
         if method == "AT-LUCB":
-            method_data['actual_samples'] = method_data['samples'] * 2
+            method_data = method_data.assign(actual_samples=method_data['samples'] * 2)
         else:
-            method_data['actual_samples'] = method_data['samples']
+            method_data = method_data.assign(actual_samples=method_data['samples'])
         
         ax2.fill_between(
             method_data['actual_samples'], 
@@ -221,6 +222,7 @@ if stat == "prop_and_sum":
     ax2.set_xlabel(r'$\#$ of samples', fontsize=14)
     ax2.set_ylabel(r'$\sum_{i\in I(t)}\mu_i$', fontsize=14)
     ax2.set_ylim(0, m)
+    ax2.set_xlim(0, t)
     ax2.legend(fontsize=12, frameon=True, facecolor='white', edgecolor='lightgray', loc='lower right')
     sns.despine(ax=ax2)
 
