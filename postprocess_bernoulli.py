@@ -20,7 +20,10 @@ real_means = np.array(means)
 real_m_top = np.argsort(-real_means)[:args.m]
 
 #print the output header
-print("t," + args.stat, flush=True)
+if args.stat == "prop_and_sum":
+    print("t," + "prop," + "sum", flush=True)
+else:
+    print("t," + args.stat, flush=True)
 
 with open(args.csv_fn) as csv_file:
     read_csv = csv.reader(csv_file, delimiter=',')
@@ -40,9 +43,14 @@ with open(args.csv_fn) as csv_file:
             i = set(real_m_top).intersection(set(m_top))
             prop = len(i) / args.m
             print(str(time) + "," + str(prop))
+        elif args.stat == "prop_and_sum": # new statistic for both proportion of success and sum of m-top means
+            i = set(real_m_top).intersection(set(m_top))
+            prop = len(i) / args.m
+            sum_ = np.sum(real_means[m_top])
+            print(str(time) + "," + str(prop) + "," + str(sum_))
         else:
             raise ValueError("Invalid statistic, choose from:" + \
-                    "[min, sum, prop_of_success]")
+                    "[min, sum, prop_of_success, prop_and_sum]")
 
 # if __name__ == "__main__":
 #     print("starting")
