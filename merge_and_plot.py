@@ -157,8 +157,14 @@ fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(20, 8))
 for method, color in zip(["Uniform", "AT-LUCB", "BFTS"], ["blue", "green", "red"]):
     method_data = combined_df[combined_df['method'] == method]
     
+    # adjust for AT-LUCB taking 2 samples per time step
+    if method == "AT-LUCB":
+        method_data['actual_samples'] = method_data['samples'] * 2
+    else:
+        method_data['actual_samples'] = method_data['samples']
+
     ax1.fill_between(
-        method_data['samples'], 
+        method_data['actual_samples'], 
         method_data['lower'], 
         method_data['upper'],
         color=color, 
@@ -166,7 +172,7 @@ for method, color in zip(["Uniform", "AT-LUCB", "BFTS"], ["blue", "green", "red"
     )
     
     sns.lineplot(
-        x='samples', 
+        x='actual_samples', 
         y='value',
         data=method_data,
         color=color,
@@ -186,9 +192,15 @@ if stat == "prop_and_sum":
     # plot the second plot (sum of the means) (this only works for the prop_and_sum statistic)
     for method, color in zip(["Uniform", "AT-LUCB", "BFTS"], ["blue", "green", "red"]):
         method_data = combined_df[combined_df['method'] == method]
+
+        # adjust for AT-LUCB taking 2 samples per time step
+        if method == "AT-LUCB":
+            method_data['actual_samples'] = method_data['samples'] * 2
+        else:
+            method_data['actual_samples'] = method_data['samples']
         
         ax2.fill_between(
-            method_data['samples'], 
+            method_data['actual_samples'], 
             method_data['sum_mu_lower'],
             method_data['sum_mu_upper'],
             color=color, 
@@ -196,7 +208,7 @@ if stat == "prop_and_sum":
         )
         
         sns.lineplot(
-            x='samples', 
+            x='actual_samples', 
             y='sum_mu',
             data=method_data,
             color=color,
