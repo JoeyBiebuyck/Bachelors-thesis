@@ -7,12 +7,12 @@ total_time=0
 
 #statistic=prop_of_success
 statistic=prop_and_sum
-amount_of_timesteps=100
-n_arms=4
-m_top=2
+amount_of_timesteps=3000
+n_arms=100
+m_top=10
 experiment_name="${n_arms}arms_${amount_of_timesteps}t_${m_top}m_shuffled_bernoulli_$date_time"
 
-dir="results"
+dir="results" #results
 full_dir="${dir}/${experiment_name}"
 mkdir -p "$full_dir"
 mkdir -p "$full_dir/results"

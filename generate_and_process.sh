@@ -12,7 +12,7 @@ n_arms=10 # dont forget to change this value in all the files!
 m_top=2
 experiment_name="${n_arms}arms_${amount_of_timesteps}t_${m_top}m_10websites_$date_time"
 
-dir="results"
+dir="experiments" #results
 full_dir="${dir}/${experiment_name}"
 mkdir -p "$full_dir"
 mkdir -p "$full_dir/results"
