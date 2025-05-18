@@ -17,6 +17,9 @@ args = parser.parse_args()
 
 dir = args.dir
 stat = args.stat
+n = args.arms
+m = args.m
+t = args.time
 
 # merge the experiments
 if stat == "prop_and_sum": # this statistic has an extra column, so must be merged differently
@@ -105,7 +108,7 @@ def make_csv_plotable(file_path, method_name):
             'upper': np.minimum(1, mean_values + std_values),   # to make sure there are no values greater than 1
             'sum_mu': sum_mean_values,
             'sum_mu_lower': np.maximum(0, sum_mean_values - sum_std_values),
-            'sum_mu_upper': np.minimum(1.9, sum_mean_values + sum_std_values),
+            'sum_mu_upper': np.minimum(m, sum_mean_values + sum_std_values),
         }
     else: # if there is only 1 statistic in the files
         df = pd.read_csv(file_path)
@@ -145,10 +148,6 @@ combined_df.to_csv(dir + "/results/merged_DF.csv", index=False)
 parent_dir, experiment_name = dir.split('/')
 arms, timesteps, top_m, extra = experiment_name.split('_', 3)
 
-n = args.arms
-m = args.m
-t = args.time
-
 # plot the experiments
 plt.style.use('default')
 sns.set_style("whitegrid", {'axes.grid': False})
@@ -182,7 +181,7 @@ for method, color in zip(["Uniform", "AT-LUCB", "BFTS"], ["blue", "green", "red"
 ax1.set_xlabel(r'$\#$ of samples', fontsize=14)
 ax1.set_ylabel(r'$|J(t) \cap J^*|/m$', fontsize=14)
 ax1.set_ylim(0, 1)
-ax1.legend(fontsize=12, frameon=True, facecolor='white', edgecolor='lightgray')
+ax1.legend(fontsize=12, frameon=True, facecolor='white', edgecolor='lightgray', loc='lower right')
 sns.despine(ax=ax1)
 
 if stat == "prop_and_sum":
@@ -211,8 +210,8 @@ if stat == "prop_and_sum":
     # set the labels
     ax2.set_xlabel(r'$\#$ of samples', fontsize=14)
     ax2.set_ylabel(r'$\sum_{i\in I(t)}\mu_i$', fontsize=14)
-    ax2.set_ylim(0, 1.9)
-    ax2.legend(fontsize=12, frameon=True, facecolor='white', edgecolor='lightgray')
+    ax2.set_ylim(0, m)
+    ax2.legend(fontsize=12, frameon=True, facecolor='white', edgecolor='lightgray', loc='lower right')
     sns.despine(ax=ax2)
 
 # set a title
