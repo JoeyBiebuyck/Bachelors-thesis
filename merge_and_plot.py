@@ -220,7 +220,7 @@ if stat == "prop_and_sum":
 
     # set the labels
     ax2.set_xlabel(r'$\#$ of samples', fontsize=14)
-    ax2.set_ylabel(r'$\sum_{i\in I(t)}\mu_i$', fontsize=14)
+    ax2.set_ylabel(r'$\sum_{a\in J(t)}\mu_a$', fontsize=14)
     ax2.set_ylim(0, m)
     ax2.set_xlim(0, t)
     ax2.legend(fontsize=12, frameon=True, facecolor='white', edgecolor='lightgray', loc='lower right')
