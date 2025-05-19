@@ -7,9 +7,9 @@ total_time=0
 
 #statistic=prop_of_success
 statistic=prop_and_sum
-amount_of_timesteps=20000
-n_arms=100
-m_top=10
+amount_of_timesteps=7000
+n_arms=50
+m_top=5
 experiment_name="${n_arms}arms_${amount_of_timesteps}t_${m_top}m_shuffled_bernoulli_$date_time"
 
 dir="experiments" #results
