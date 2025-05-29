@@ -32,26 +32,26 @@ technique_to_mean = {} # first map each technique identifier to its expected mea
 # the order of the means seems reversed, but that is because we need to find the techniques which have the lowest means
 for technique in range(1, n_techniques+1):
     if technique in range(1, int(n_techniques*website_1)+1):
-        technique_to_mean[technique] = 1
+        technique_to_mean[technique] = 0
     elif technique in range(int(n_techniques*website_1)+1, int(n_techniques*website_2)+1):
-        technique_to_mean[technique] = 8/n_websites
-    elif technique in range(int(n_techniques*website_2)+1, int(n_techniques*website_3)+1):
-        technique_to_mean[technique] = 7/n_websites
-    elif technique in range(int(n_techniques*website_3)+1, int(n_techniques*website_4)+1):
-        technique_to_mean[technique] = 6/n_websites
-    elif technique in range(int(n_techniques*website_4)+1, int(n_techniques*website_5)+1):
-        technique_to_mean[technique] = 5/n_websites
-    elif technique in range(int(n_techniques*website_5)+1, int(n_techniques*website_6)+1):
-        technique_to_mean[technique] = 4/n_websites
-    elif technique in range(int(n_techniques*website_6)+1, int(n_techniques*website_7)+1):
-        technique_to_mean[technique] = 3//n_websites
-    elif technique in range(int(n_techniques*website_7)+1, int(n_techniques*website_8)+1):
-        technique_to_mean[technique] = 2/n_websites
-    elif technique in range(int(n_techniques*website_8)+1, int(n_techniques*website_9)+1):
         technique_to_mean[technique] = 1/n_websites
+    elif technique in range(int(n_techniques*website_2)+1, int(n_techniques*website_3)+1):
+        technique_to_mean[technique] = 2/n_websites
+    elif technique in range(int(n_techniques*website_3)+1, int(n_techniques*website_4)+1):
+        technique_to_mean[technique] = 3/n_websites
+    elif technique in range(int(n_techniques*website_4)+1, int(n_techniques*website_5)+1):
+        technique_to_mean[technique] = 4/n_websites
+    elif technique in range(int(n_techniques*website_5)+1, int(n_techniques*website_6)+1):
+        technique_to_mean[technique] = 5/n_websites
+    elif technique in range(int(n_techniques*website_6)+1, int(n_techniques*website_7)+1):
+        technique_to_mean[technique] = 6//n_websites
+    elif technique in range(int(n_techniques*website_7)+1, int(n_techniques*website_8)+1):
+        technique_to_mean[technique] = 7/n_websites
+    elif technique in range(int(n_techniques*website_8)+1, int(n_techniques*website_9)+1):
+        technique_to_mean[technique] = 8/n_websites
     else:
         # best_techniques += 1
-        technique_to_mean[technique] = 0
+        technique_to_mean[technique] = 1
 
 bandit = XSS_bandit(n_techniques)
 techniques = XSS_transformations(n_techniques) # generate the identifiers (in the same order) that are used as arms in the bandit

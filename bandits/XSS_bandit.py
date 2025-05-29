@@ -46,9 +46,9 @@ def send_and_get_result(payload_):
     # 4th return this response
     # we respond 0 when the XSS attack succeeds, since m-top bandits return the arms with the lowest means
     if status == 200:
-        return 0
-    elif status == 404:
         return 1
+    elif status == 404:
+        return 0
 
 
 # Simulations of XSS transformations:
