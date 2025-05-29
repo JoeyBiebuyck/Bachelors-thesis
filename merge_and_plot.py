@@ -183,7 +183,7 @@ for method, color in zip(["Uniform", "AT-LUCB", "BFTS"], ["blue", "green", "red"
 
 # set the labels
 ax1.set_xlabel(r'$\#$ of samples', fontsize=14)
-ax1.set_ylabel(r'$|J(t) \cap J^*|/m$', fontsize=14)
+ax1.set_ylabel(r'$\frac{|J^t \cap J^*|}{m}$', fontsize=14)
 ax1.set_ylim(0, 1)
 ax1.set_xlim(0, t)
 ax1.legend(fontsize=12, frameon=True, facecolor='white', edgecolor='lightgray', loc='lower right')
@@ -220,7 +220,7 @@ if stat == "prop_and_sum":
 
     # set the labels
     ax2.set_xlabel(r'$\#$ of samples', fontsize=14)
-    ax2.set_ylabel(r'$\sum_{a\in J(t)}\mu_a$', fontsize=14)
+    ax2.set_ylabel(r'$\sum_{a_k\in J^t}\mu_k^t$', fontsize=14)
     ax2.set_ylim(0, m)
     ax2.set_xlim(0, t)
     ax2.legend(fontsize=12, frameon=True, facecolor='white', edgecolor='lightgray', loc='lower right')
