@@ -148,6 +148,7 @@ arms, timesteps, top_m, extra = experiment_name.split('_', 3)
 
 # plot the experiments
 plt.style.use('default')
+sns.set_context("talk")
 sns.set_style("whitegrid", {'axes.grid': False})
 
 # make 2 subplots
@@ -182,11 +183,12 @@ for method, color in zip(["Uniform", "AT-LUCB", "BFTS"], ["blue", "green", "red"
     )
 
 # set the labels
-ax1.set_xlabel(r'$\#$ of samples', fontsize=14)
-ax1.set_ylabel(r'$\frac{|J^t \cap J^*|}{m}$', fontsize=14)
+ax1.set_xlabel(r'$\#$ of samples')
+# ax1.set_ylabel(r'$\frac{|J^t \cap J^*|}{m}$', fontsize=14)
+ax1.set_ylabel("Proportion of correctly identified arms")
 ax1.set_ylim(0, 1)
 ax1.set_xlim(0, t)
-ax1.legend(fontsize=12, frameon=True, facecolor='white', edgecolor='lightgray', loc='lower right')
+ax1.legend(fontsize=14, frameon=True, facecolor='white', edgecolor='gray', loc='lower right')
 sns.despine(ax=ax1)
 
 if stat == "prop_and_sum":
@@ -219,20 +221,21 @@ if stat == "prop_and_sum":
         )
 
     # set the labels
-    ax2.set_xlabel(r'$\#$ of samples', fontsize=14)
-    ax2.set_ylabel(r'$\sum_{a_k\in J^t}\mu_k^t$', fontsize=14)
+    ax2.set_xlabel(r'$\#$ of samples')
+    # ax2.set_ylabel(r'$\sum_{a_k\in J^t}\mu_k^t$', fontsize=14)
+    ax2.set_ylabel("Sum of m-top means")
     ax2.set_ylim(0, m)
     ax2.set_xlim(0, t)
-    ax2.legend(fontsize=12, frameon=True, facecolor='white', edgecolor='lightgray', loc='lower right')
+    ax2.legend(fontsize=14, frameon=True, facecolor='white', edgecolor='lightgray', loc='lower right')
     sns.despine(ax=ax2)
 
 # set a title
-fig.suptitle(f"n={n}, m={m}, t={t}", fontsize=16)
+fig.suptitle(f"n={n}, m={m}, t={t}", fontsize=20, fontweight="bold")
 
 # set tight layout
-plt.tight_layout(pad=1.5, rect=[0, 0, 1, 0.95])
+plt.tight_layout(pad=2, rect=[0, 0, 1, 0.95])
 
 # save and plot the figure
 plt.savefig(results_dir + '/' + experiment_name + '_combined.png', dpi=300)
-plt.savefig('experiment_plots/' + experiment_name + '_combined.png', dpi=300)
+plt.savefig('presentation_plots/' + experiment_name + '_combined.png', dpi=300)
 plt.show()
