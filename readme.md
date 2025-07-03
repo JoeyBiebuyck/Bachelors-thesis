@@ -1,7 +1,7 @@
-# website logic:
+# Website logic:
 The website logic is in websites/websitename/homepage/views.py
 
-# bandit
+# Bandit
 The bandit is defined in bandits/XSS_bandit.py
 
 # Website launching
