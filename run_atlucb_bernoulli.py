@@ -15,7 +15,6 @@ parser.add_argument("-m", "--m", dest="m",type=int, required=True)
 args = parser.parse_args()
 
 np.random.seed(args.seed)
-
 bandit = Bernoulli_bandit(args.arms)
 
 print_header(args.m)

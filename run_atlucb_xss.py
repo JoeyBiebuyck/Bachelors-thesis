@@ -21,13 +21,6 @@ args = parser.parse_args()
 
 np.random.seed(args.seed)
 bandit = XSS_bandit(args.arms)
-#print(f"bandit has {bandit.arms} arms")
-
-# it is possible to start the servers here, but the terminal output will be filled with the server console outputs
-# print("Starting servers:")
-# server_thread = threading.Thread(target=start_server, daemon=True)
-# server_thread.start()
-# print("Servers have been started")
 
 print_header(args.m)
 sigma=0.5

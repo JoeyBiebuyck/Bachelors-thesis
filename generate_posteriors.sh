@@ -1,4 +1,6 @@
 #!/bin/bash
+# Script to generate posterior distributions of all arms of the bandit for a given experiment
+# this was used for debugging purposes
 
 start_time=$(date +%s)
 batch_start_time=$(date +%s)

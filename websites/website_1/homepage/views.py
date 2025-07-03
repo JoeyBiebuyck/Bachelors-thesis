@@ -20,10 +20,12 @@ def search_view(request):
     # strongestDisarmedInput = int(n_arms * disarm_rate)
     disarmedInputs = [str(x) for x in list(range(1, strongestDisarmedInput+1))] # the weakest 50% (10) of the XSS payloads get sanitized by this website's filter (there are 20 transformations possible)
 
+    # UNCOMMENT THIS IF YOU WANT THE TESTING TO WORK
     # returning succes/failure
-    if query in disarmedInputs:
-        return HttpResponse(status=404) # query unsuccessfully attempted to evade XSS-filter
-    else:
-        return HttpResponse(status=200) # query successfully evaded XSS-filter
+    # if query in disarmedInputs:
+    #     return HttpResponse(status=404) # query unsuccessfully attempted to evade XSS-filter
+    # else:
+    #     return HttpResponse(status=200) # query successfully evaded XSS-filter
 
-    # return render(request, 'search.html', {'query': query}) # uncomment this if you are manually testing whether an evasion technique works
+    # COMMENT THE ABOVE AND UNCOMMENT THIS IF YOU WANT THE DEMO TO WORK
+    return render(request, 'search.html', {'query': query}) # uncomment this if you are manually testing whether an evasion technique works

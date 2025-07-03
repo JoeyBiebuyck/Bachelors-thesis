@@ -51,29 +51,3 @@ with open(args.csv_fn) as csv_file:
         else:
             raise ValueError("Invalid statistic, choose from:" + \
                     "[min, sum, prop_of_success, prop_and_sum]")
-
-# if __name__ == "__main__":
-#     print("starting")
-#     n_techniques = 20
-#     website_1 = 0.25
-#     website_2 = 0.45
-#     website_3 = 0.70
-#     technique_to_mean = {}
-
-#     for technique in range(1, n_techniques+1):
-#         if technique in range(1, int(n_techniques*website_1)+1):
-#             technique_to_mean[technique] = 1/3
-#         elif technique in range(int(n_techniques*website_1)+1, int(n_techniques*website_2)+1):
-#             technique_to_mean[technique] = 2/3
-#         else:
-#             technique_to_mean[technique] = 1
-
-#     print(technique_to_mean)
-
-#     bandit = XSS_bandit(n_techniques)
-#     techniques = XSS_transformations(n_techniques)
-#     identifiers = list(map(lambda x: x("test"), techniques))
-#     real_means = list(map(lambda x: technique_to_mean[x], identifiers))
-
-#     for identifier, mean in zip(identifiers, real_means):
-#         print(f"{identifier} has the mean: {mean}")

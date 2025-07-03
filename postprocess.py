@@ -3,7 +3,6 @@ import csv
 import numpy as np
 from bandits.XSS_bandit import XSS_transformations, XSS_bandit
 import os
-#from global_variables import n_arms
 
 parser = ArgumentParser(description="postprocess")
 
@@ -27,9 +26,9 @@ website_7 = 0.7
 website_8 = 0.8
 website_9 = 0.9
 technique_to_mean = {} # first map each technique identifier to its expected mean, this is calculated based on how many filters it is able to bypass
-# best_techniques = 0
 
-# the order of the means seems reversed, but that is because we need to find the techniques which have the lowest means
+# calculate the mean of each technique (this is based on how many websites it can evade the filter of)
+# if the technique is in the range, that means all websites of that number and higher block its evasion attempts
 for technique in range(1, n_techniques+1):
     if technique in range(1, int(n_techniques*website_1)+1):
         technique_to_mean[technique] = 0
@@ -50,7 +49,6 @@ for technique in range(1, n_techniques+1):
     elif technique in range(int(n_techniques*website_8)+1, int(n_techniques*website_9)+1):
         technique_to_mean[technique] = 8/n_websites
     else:
-        # best_techniques += 1
         technique_to_mean[technique] = 1
 
 bandit = XSS_bandit(n_techniques)
@@ -59,8 +57,7 @@ identifiers = list(map(lambda x: x("test"), techniques)) # map the techiques on 
 real_means = list(map(lambda x: technique_to_mean[x], identifiers)) # retrieve the means from the dictionary
 
 real_means = np.array(real_means)
-real_m_top = np.argsort(-real_means)[:args.m]
-# real_m_top = np.argsort(-real_means)[:best_techniques]
+real_m_top = np.argsort(-real_means)[:args.m] # the indexes of the m-top arms
 
 #print the output header
 if args.stat == "prop_and_sum":
@@ -94,29 +91,3 @@ with open(args.csv_fn) as csv_file:
         else:
             raise ValueError("Invalid statistic, choose from:" + \
                     "[min, sum, prop_of_success, prop_and_sum]")
-
-# if __name__ == "__main__":
-#     print("starting")
-#     n_techniques = 20
-#     website_1 = 0.25
-#     website_2 = 0.45
-#     website_3 = 0.70
-#     technique_to_mean = {}
-
-#     for technique in range(1, n_techniques+1):
-#         if technique in range(1, int(n_techniques*website_1)+1):
-#             technique_to_mean[technique] = 1/3
-#         elif technique in range(int(n_techniques*website_1)+1, int(n_techniques*website_2)+1):
-#             technique_to_mean[technique] = 2/3
-#         else:
-#             technique_to_mean[technique] = 1
-
-#     print(technique_to_mean)
-
-#     bandit = XSS_bandit(n_techniques)
-#     techniques = XSS_transformations(n_techniques)
-#     identifiers = list(map(lambda x: x("test"), techniques))
-#     real_means = list(map(lambda x: technique_to_mean[x], identifiers))
-
-#     for identifier, mean in zip(identifiers, real_means):
-#         print(f"{identifier} has the mean: {mean}")

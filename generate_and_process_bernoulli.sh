@@ -1,15 +1,16 @@
 #!/bin/bash
+# Script to generate data with the Bernoulli bandit and plot it
 
 date_time=$(date +"%Y-%m-%d_%Hh%Mm%Ss")
 start_time=$(date +%s)
 batch_start_time=$(date +%s)
 total_time=0
 
-#statistic=prop_of_success
+# ADJUST PARAMETERS TO CHANGE EXPERIMENT
 statistic=prop_and_sum
-amount_of_timesteps=10000
-n_arms=50
-m_top=5
+amount_of_timesteps=1000
+n_arms=10
+m_top=4
 experiment_name="${n_arms}arms_${amount_of_timesteps}t_${m_top}m_shuffled_bernoulli_$date_time"
 
 dir="experiments" #results
@@ -55,6 +56,7 @@ print_batch_time() {
 
 echo -e "${GREEN}Script started at $(date)${NC}"
 
+# Do 100 different runs, each a different seed
 for r in {1..100}
 do
 python run_bfts_bernoulli.py -s $r -t $amount_of_timesteps -n $n_arms -m $m_top > ${full_dir}/bfts.$r.csv
