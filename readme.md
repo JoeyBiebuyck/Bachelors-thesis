@@ -4,13 +4,18 @@ This repository has the code used for my bachelors thesis.
 ## About
 This repository contains a framework to identify the most effective XSS payload transformations. To be used in practice the code must be adapted for the specific use case, but this repository contains everything that was used to test the effectiveness of this approach. The bfts folder is a clone of the https://github.com/plibin/bfts repository.
 
+There are two bandits, the Bernoulli bandit and the XSS bandit. The Bernoulli bandit is a bandit where each arm has a unique underlying Bernoulli reward distribution. The XSS bandit is used to test the effectiveness of a set of XSS payload transformations. To change the payload transformations used by the bandit, the XSS_bandit.py file in the bandits folder must be edited. Running an experiment can be done using the run_atlucb_*.py, run_bfts_*.py, or run_uniform_*.py files. To take into account randomness the generate_and_process.sh files can be used to run many experiments on the same parameters with different seeds. These script files also automatically combine each individual experiment's data and plot the graphs of the requested statistics.
+
+Below is information about where changes need to be made to alter certain behaviour.
+
 ### Website logic:
 The website logic is in websites/websitename/homepage/views.py
 
 ### Bandit
-The bandit is defined in bandits/XSS_bandit.py
+The bandits are defined in bandits/
 
 ### Website launching
+Websites must be launched prior to starting an XSS bandit experiment. Any additional websites must be created manually.
 The website launching is defined in start_server.py
 
 ### How to run:
